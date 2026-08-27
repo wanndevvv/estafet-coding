@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full bg-gray-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Financial Cockpit</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="h-full flex flex-col font-sans text-gray-800 antialiased">
+
+  <!-- Header / Navigation -->
+  <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+      <div class="flex items-center space-x-3">
+        <i data-lucide="wallet" class="w-8 h-8 text-indigo-200"></i>
+        <span class="font-bold text-xl tracking-tight">Financial Cockpit</span>
+      </div>
+      <nav class="flex space-x-1 sm:space-x-4 text-sm font-medium">
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="px-3 py-2 rounded-md bg-indigo-700 text-white transition">Dashboard</button>
+        <button onclick="switchTab('transactions')" id="nav-transactions" class="px-3 py-2 rounded-md hover:bg-indigo-500 transition">Transaksi</button>
+        <button onclick="switchTab('simulator')" id="nav-simulator" class="px-3 py-2 rounded-md hover:bg-indigo-500 transition">Simulator Investasi</button>
+        <button onclick="switchTab('settings')" id="nav-settings" class="px-3 py-2 rounded-md hover:bg-indigo-500 transition">Backup & Storage</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- TAB 1: DASHBOARD -->
+    <section id="tab-dashboard" class="space-y-6">
+      <!-- Top Metrics Summary Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">Total Net Worth</p>
+            <h3 id="stat-net-worth" class="text-2xl font-extrabold text-gray-900 mt-1">Rp 0</h3>
+          </div>
+          <div class="p-3 bg-indigo-50 rounded-lg text-indigo-600">
+            <i data-lucide="coins" class="w-6 h-6"></i>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">Total Pemasukan</p>
+            <h3 id="stat-income" class="text-2xl font-extrabold text-emerald-600 mt-1">Rp 0</h3>
+          </div>
+          <div class="p-3 bg-emerald-50 rounded-lg text-emerald-600">
+            <i data-lucide="arrow-down-left" class="w-6 h-6"></i>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">Total Pengeluaran</p>
+            <h3 id="stat-expense" class="text-2xl font-extrabold text-rose-600 mt-1">Rp 0</h3>
+          </div>
+          <div class="p-3 bg-rose-50 rounded-lg text-rose-600">
+            <i data-lucide="arrow-up-right" class="w-6 h-6"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wallets & Budget Overview -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- List Wallets -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 lg:col-span-2">
+          <div class="flex justify-between items-center mb-4">
+            <h4 class="font-bold text-gray-800 flex items-center gap-2">
+              <i data-lucide="credit-card" class="w-5 h-5 text-indigo-500"></i> Akun / Rekening Dompet
+            </h4>
+            <button onclick="toggleModal('modal-wallet', true)" class="text-xs font-semibold bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-lg hover:bg-indigo-100 transition">+ Tambah Dompet</button>
+          </div>
+          <div id="wallet-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Budget Meters -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <i data-lucide="pie-chart" class="w-5 h-5 text-indigo-500"></i> Budget Meter Bulanan
+          </h4>
+          <div id="budget-meter-container" class="space-y-4">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <h4 class="font-bold text-gray-800 mb-4">Pengeluaran Berdasarkan Kategori</h4>
+          <div class="h-64 flex justify-center">
+            <canvas id="chart-category"></canvas>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <h4 class="font-bold text-gray-800 mb-4">Cashflow Bulanan</h4>
+          <div class="h-64">
+            <canvas id="chart-cashflow"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: TRANSACTIONS -->
+    <section id="tab-transactions" class="space-y-6 hidden">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <h3 class="text-xl font-bold text-gray-800">Riwayat Mutasi & Transaksi</h3>
+        <button onclick="toggleModal('modal-transaction', true)" class="bg-indigo-600 text-white font-medium px-4 py-2 rounded-lg hover:bg-indigo-700 transition flex items-center justify-center gap-2">
+          <i data-lucide="plus" class="w-4 h-4"></i> Catat Transaksi Baru
+        </button>
+      </div>
+
+      <!-- Filter Controls -->
+      <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <input type="text" id="filter-search" oninput="renderTransactions()" placeholder="Cari catatan..." class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <select id="filter-category" onchange="renderTransactions()" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <option value="">Semua Kategori</option>
+        </select>
+        <select id="filter-wallet" onchange="renderTransactions()" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <option value="">Semua Dompet</option>
+        </select>
+        <select id="filter-type" onchange="renderTransactions()" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <option value="">Semua Tipe</option>
+          <option value="income">Pemasukan</option>
+          <option value="expense">Pengeluaran</option>
+          <option value="transfer">Transfer</option>
+        </select>
+      </div>
+
+      <!-- Transaction Table -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-gray-50 border-b border-gray-100 text-gray-500 uppercase text-xs">
+              <tr>
+                <th class="py-3 px-4">Tanggal</th>
+                <th class="py-3 px-4">Tipe</th>
+                <th class="py-3 px-4">Dompet / Rekening</th>
+                <th class="py-3 px-4">Kategori</th>
+                <th class="py-3 px-4">Catatan</th>
+                <th class="py-3 px-4 text-right">Nominal</th>
+                <th class="py-3 px-4 text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="transaction-table-body" class="divide-y divide-gray-100">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: SIMULATOR INVESTASI -->
+    <section id="tab-simulator" class="space-y-6 hidden">
+      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="space-y-4">
+          <h4 class="font-bold text-gray-800 flex items-center gap-2">
+            <i data-lucide="trending-up" class="w-5 h-5 text-indigo-500"></i> Simulator Bunga Majemuk
+          </h4>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Modal Awal (Rp)</label>
+            <input type="number" id="sim-principal" value="10000000" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Setoran Bulanan (Rp)</label>
+            <input type="number" id="sim-monthly" value="1000000" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Estimasi Return per Tahun (%)</label>
+            <input type="number" id="sim-rate" value="10" step="0.1" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Durasi Investasi (Tahun)</label>
+            <input type="number" id="sim-years" value="10" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm">
+          </div>
+          <button onclick="runSimulation()" class="w-full bg-indigo-600 text-white font-medium py-2 rounded-lg hover:bg-indigo-700 transition">Hitung Proyeksi</button>
+        </div>
+
+        <div class="md:col-span-2 flex flex-col justify-between">
+          <div class="h-72">
+            <canvas id="chart-investment"></canvas>
+          </div>
+          <div id="sim-summary" class="mt-4 p-4 bg-indigo-50 rounded-lg text-sm text-indigo-900 flex justify-around text-center">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: BACKUP & STORAGE -->
+    <section id="tab-settings" class="space-y-6 hidden">
+      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 max-w-2xl mx-auto space-y-6">
+        <h3 class="font-bold text-lg text-gray-800 border-b pb-2">Manajemen Data & Impor/Ekspor</h3>
+        <div class="space-y-4">
+          <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div>
+              <h5 class="font-semibold text-gray-800 text-sm">Ekspor JSON Backup</h5>
+              <p class="text-xs text-gray-500">Unduh seluruh state transaksi & dompet ke file JSON.</p>
+            </div>
+            <button onclick="exportJSON()" class="bg-indigo-600 text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-indigo-700 transition">Ekspor JSON</button>
+          </div>
+          <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div>
+              <h5 class="font-semibold text-gray-800 text-sm">Ekspor Transaksi CSV</h5>
+              <p class="text-xs text-gray-500">Unduh riwayat transaksi ke format file .csv</p>
+            </div>
+            <button onclick="exportCSV()" class="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-emerald-700 transition">Ekspor CSV</button>
+          </div>
+          <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div>
+              <h5 class="font-semibold text-gray-800 text-sm">Impor JSON Backup</h5>
+              <p class="text-xs text-gray-500">Pulihkan state dari file JSON lokal.</p>
+            </div>
+            <input type="file" id="import-json-file" onchange="importJSON(event)" accept=".json" class="hidden">
+            <button onclick="document.getElementById('import-json-file').click()" class="bg-gray-800 text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-900 transition">Impor JSON</button>
+          </div>
+          <div class="flex items-center justify-between p-4 bg-rose-50 rounded-lg border border-rose-100">
+            <div>
+              <h5 class="font-semibold text-rose-800 text-sm">Reset Seluruh Data</h5>
+              <p class="text-xs text-rose-500">Kembalikan data aplikasi ke kondisi bawaan awal.</p>
+            </div>
+            <button onclick="resetData()" class="bg-rose-600 text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-rose-700 transition">Reset Data</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL: TAMBAH TRANSAKSI -->
+  <div id="modal-transaction" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-xl max-w-md w-full p-6 space-y-4">
+      <div class="flex justify-between items-center border-b pb-2">
+        <h4 class="font-bold text-gray-800">Tambah Transaksi Baru</h4>
+        <button onclick="toggleModal('modal-transaction', false)" class="text-gray-400 hover:text-gray-600">&times;</button>
+      </div>
+      <form id="form-transaction" onsubmit="handleTransactionSubmit(event)" class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Tipe Transaksi</label>
+          <select id="tx-type" onchange="toggleTxTypeFields()" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm">
+            <option value="expense">Pengeluaran</option>
+            <option value="income">Pemasukan</option>
+            <option value="transfer">Transfer Dompet</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Nominal (Rp)</label>
+          <input type="number" id="tx-amount" required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm">
+        </div>
+        <div id="field-wallet-src">
+          <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Dompet / Rekening</label>
+          <select id="tx-wallet" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"></select>
+        </div>
+        <div id="field-wallet-target" class="hidden">
+          <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Dompet Tujuan</label>
+          <select id="tx-target-wallet" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"></select>
+        </div>
+        <div id="field-category">
+          <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Kategori</label>
+          <select id="tx-category" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"></select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Tanggal</label>
+          <input type="date" id="tx-date" required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Catatan</label>
+          <input type="text" id="tx-notes" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm">
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="toggleModal('modal-transaction', false)" class="px-4 py-2 rounded-lg border text-sm font-medium">Batal</button>
+          <button type="submit" class="px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: TAMBAH DOMPET -->
+  <div id="modal-wallet" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-xl max-w-md w-full p-6 space-y-4">
+      <div class="flex justify-between items-center border-b pb-2">
+        <h4 class="font-bold text-gray-800">Tambah Dompet / Rekening</h4>
+        <button onclick="toggleModal('modal-wallet', false)" class="text-gray-400 hover:text-gray-600">&times;</button>
+      </div>
+      <form id="form-wallet" onsubmit="handleWalletSubmit(event)" class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Nama Rekening / Dompet</label>
+          <input type="text" id="wallet-name" required placeholder="misal: Bank Mandiri" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Tipe</label>
+          <select id="wallet-type" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm">
+            <option value="bank">Bank</option>
+            <option value="cash">Uang Tunai</option>
+            <option value="ewallet">E-Wallet</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Saldo Awal (Rp)</label>
+          <input type="number" id="wallet-balance" required value="0" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Warna Indikator</label>
+          <input type="color" id="wallet-color" value="#3B82F6" class="w-full h-10 border border-gray-200 rounded-lg p-1">
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="toggleModal('modal-wallet', false)" class="px-4 py-2 rounded-lg border text-sm font-medium">Batal</button>
+          <button type="submit" class="px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/state.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

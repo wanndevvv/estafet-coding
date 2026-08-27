@@ -974,3 +974,165 @@ function resetData() {
     showToast("Seluruh data telah direset ke setelan awal pabrik.", "warning");
   }
 }
+
+/* ==========================================================================
+   FASE 3: STEALTH, PIN, GOALS, RECURRING & BANK CSV HANDLERS
+   ========================================================================== */
+
+function toggleStealthUI() {
+  const isStealth = store.toggleStealthMode();
+  showToast(isStealth ? "Mode Penyamaran Saldo DIBUKA (Stealth Active)" : "Mode Penyamaran Saldo DIMATIKAN", isStealth ? "warning" : "info");
+  renderAll();
+}
+
+function promptSecurityPin() {
+  const currentPin = store.getState().settings.securityPin;
+  if (!currentPin) {
+    const pin = prompt("Buat 4-digit Kode PIN Keamanan Baru:");
+    if (pin && pin.length >= 4) {
+      store.setSecurityPin(pin);
+      showToast("PIN Keamanan berhasil diaktifkan!", "success");
+    }
+  } else {
+    const input = prompt("Masukkan PIN Keamanan untuk membuka/merubah:");
+    if (input === currentPin) {
+      if (confirm("Hapus kunci PIN keamanan saat ini?")) {
+        store.setSecurityPin(null);
+        showToast("PIN Keamanan dinonaktifkan.", "info");
+      }
+    } else {
+      showToast("PIN Salah! Akses ditolak.", "error");
+    }
+  }
+}
+
+function renderGoals() {
+  const state = store.getState();
+  const container = document.getElementById("goals-list-container");
+  if (!container) return;
+
+  if (state.goals.length === 0) {
+    container.innerHTML = `<p class="text-xs text-slate-500">Belum ada target menabung.</p>`;
+    return;
+  }
+
+  container.innerHTML = state.goals
+    .map((g) => {
+      const percent = Math.min(100, Math.round((g.currentAmount / g.targetAmount) * 100));
+      return `
+      <div class="skeuo-card-flat p-3 space-y-2">
+        <div class="flex justify-between items-center text-xs font-bold text-slate-200">
+          <span>${g.name}</span>
+          <span class="text-sky-400 font-mono">${percent}%</span>
+        </div>
+        <div class="skeuo-meter-track h-2.5">
+          <div class="skeuo-meter-fill bg-sky-400" style="width: ${percent}%;"></div>
+        </div>
+        <div class="flex justify-between items-center text-[10px] font-mono text-slate-400">
+          <span>Terkumpul: ${formatCurrency(g.currentAmount)}</span>
+          <span>Target: ${formatCurrency(g.targetAmount)}</span>
+        </div>
+      </div>
+    `;
+    })
+    .join("");
+}
+
+function renderRecurring() {
+  const state = store.getState();
+  const container = document.getElementById("recurring-list-container");
+  if (!container) return;
+
+  if (state.recurring.length === 0) {
+    container.innerHTML = `<p class="text-xs text-slate-500 col-span-2">Belum ada transaksi rutin otomatis.</p>`;
+    return;
+  }
+
+  container.innerHTML = state.recurring
+    .map((r) => {
+      const cat = state.categories.find((c) => c.id === r.categoryId);
+      const wallet = state.wallets.find((w) => w.id === r.walletId);
+      return `
+      <div class="skeuo-card-flat p-3.5 flex items-center justify-between">
+        <div>
+          <h5 class="text-xs font-bold text-slate-200">${r.name}</h5>
+          <p class="text-[10px] font-mono text-slate-400 mt-0.5">${cat ? cat.name : "Rutin"} • ${wallet ? wallet.name : "-"}</p>
+        </div>
+        <div class="text-right">
+          <span class="text-xs font-mono font-bold ${r.type === "income" ? "text-emerald-400" : "text-rose-400"}">${formatCurrency(r.amount)}</span>
+          <button onclick="store.deleteRecurring('${r.id}')" class="block text-[10px] text-rose-400 hover:underline mt-1">Hapus</button>
+        </div>
+      </div>
+    `;
+    })
+    .join("");
+}
+
+function handleGoalSubmit(e) {
+  e.preventDefault();
+  const name = document.getElementById("goal-name").value;
+  const targetAmount = document.getElementById("goal-target").value;
+  const currentAmount = document.getElementById("goal-current").value;
+  const deadline = document.getElementById("goal-deadline").value;
+
+  store.addGoal({ name, targetAmount, currentAmount, deadline });
+  toggleModal("modal-goal", false);
+  document.getElementById("form-goal").reset();
+  showToast("Target menabung berhasil ditambahkan!", "success");
+}
+
+function handleRecurringSubmit(e) {
+  e.preventDefault();
+  const name = document.getElementById("rec-name").value;
+  const type = document.getElementById("rec-type").value;
+  const amount = document.getElementById("rec-amount").value;
+  const walletId = document.getElementById("rec-wallet").value;
+  const categoryId = document.getElementById("rec-category").value;
+
+  store.addRecurring({ name, type, amount, walletId, categoryId, frequency: "monthly", lastProcessed: null });
+  toggleModal("modal-recurring", false);
+  document.getElementById("form-recurring").reset();
+  showToast("Otomatisasi transaksi rutin disimpan!", "success");
+}
+
+function handleBankCSVImport(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (evt) => {
+    const transactions = parseBankCSV(evt.target.result);
+    if (transactions.length > 0) {
+      const state = store.getState();
+      const defaultWallet = state.wallets[0]?.id || "w_main";
+      const defaultCatInc = state.categories.find((c) => c.type === "income")?.id || "cat_inc_1";
+      const defaultCatExp = state.categories.find((c) => c.type === "expense")?.id || "cat_exp_1";
+
+      transactions.forEach((tx) => {
+        store.addTransaction({
+          ...tx,
+          walletId: defaultWallet,
+          targetWalletId: null,
+          categoryId: tx.type === "income" ? defaultCatInc : defaultCatExp,
+          tags: ["impor-bank"]
+        });
+      });
+
+      showToast(`Berhasil mengimpor ${transactions.length} mutasi bank dari CSV!`, "success");
+    } else {
+      showToast("File CSV tidak valid atau tidak memiliki baris transaksi!", "error");
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = "";
+}
+
+// Hook renderGoals & renderRecurring into master renderAll
+const originalRenderAll = renderAll;
+renderAll = function () {
+  originalRenderAll();
+  renderGoals();
+  renderRecurring();
+  store.processDueRecurring();
+};
+

@@ -68,8 +68,14 @@
         </button>
       </nav>
 
-      <!-- Desktop Quick Action Button -->
+      <!-- Desktop Quick Action Button & Security Switches -->
       <div class="hidden md:flex items-center gap-3">
+        <button onclick="toggleStealthUI()" id="btn-stealth-mode" title="Mode Penyamaran Saldo" class="skeuo-btn skeuo-btn-secondary p-2 rounded-xl text-sky-400">
+          <i data-lucide="eye" class="w-4 h-4"></i>
+        </button>
+        <button onclick="promptSecurityPin()" id="btn-pin-mode" title="Kunci PIN Keamanan" class="skeuo-btn skeuo-btn-secondary p-2 rounded-xl text-amber-400">
+          <i data-lucide="lock" class="w-4 h-4"></i>
+        </button>
         <button onclick="toggleModal('modal-transaction', true)" class="skeuo-btn skeuo-btn-primary px-4 py-2 text-xs uppercase tracking-wider flex items-center gap-2 shadow-[0_0_15px_rgba(2,132,199,0.4)]">
           <i data-lucide="plus-circle" class="w-4 h-4"></i> Catat Transaksi
         </button>
@@ -77,6 +83,7 @@
 
     </div>
   </header>
+
 
   <!-- MAIN VIEWPORT CONTENT -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
@@ -197,10 +204,10 @@
           </div>
         </div>
 
-        <!-- Monthly Budget Meter Gauges -->
-        <div class="skeuo-panel p-6 relative flex flex-col justify-between">
+        <!-- Monthly Budget Meter Gauges & Financial Goals -->
+        <div class="skeuo-panel p-6 relative flex flex-col justify-between space-y-5">
           <div>
-            <div class="flex items-center justify-between mb-5 border-b border-slate-800/80 pb-3">
+            <div class="flex items-center justify-between mb-4 border-b border-slate-800/80 pb-3">
               <div class="flex items-center gap-2.5">
                 <div class="p-2 skeuo-sunken rounded-lg text-sky-400">
                   <i data-lucide="pie-chart" class="w-4 h-4"></i>
@@ -217,7 +224,20 @@
             </div>
           </div>
 
-          <div class="mt-5 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 font-mono">
+          <!-- TARGET MENABUNG (FINANCIAL GOALS) -->
+          <div class="pt-4 border-t border-slate-800/80">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold text-sky-400 font-mono flex items-center gap-1.5">
+                <i data-lucide="target" class="w-4 h-4"></i> TARGET MENABUNG (GOALS)
+              </span>
+              <button onclick="toggleModal('modal-goal', true)" class="text-[10px] bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded border border-sky-500/30">+ Target</button>
+            </div>
+            <div id="goals-list-container" class="space-y-3">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 font-mono">
             <span class="flex items-center gap-1.5"><span class="skeuo-led skeuo-led-cyan"></span> Normal &lt;80%</span>
             <span class="flex items-center gap-1.5"><span class="skeuo-led skeuo-led-amber"></span> Warning 80%</span>
             <span class="flex items-center gap-1.5"><span class="skeuo-led skeuo-led-red"></span> Overlimit</span>
@@ -225,6 +245,28 @@
         </div>
 
       </div>
+
+      <!-- RECURRING TRANSACTIONS & AUTOMATION PANEL -->
+      <div class="skeuo-panel p-6">
+        <div class="flex items-center justify-between mb-4 border-b border-slate-800/80 pb-3">
+          <div class="flex items-center gap-2.5">
+            <div class="p-2 skeuo-sunken rounded-lg text-emerald-400">
+              <i data-lucide="repeat" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-slate-100 uppercase tracking-wider">TRANSAKSI RUTIN BERULANG (AUTOMATION)</h4>
+              <p class="text-[11px] text-slate-400 font-mono">Otomatisasi pencatatan tagihan & gaji berkala</p>
+            </div>
+          </div>
+          <button onclick="toggleModal('modal-recurring', true)" class="skeuo-btn skeuo-btn-secondary text-xs px-3 py-1.5 rounded-lg flex items-center gap-1">
+            <i data-lucide="plus" class="w-3.5 h-3.5 text-emerald-400"></i> Tambah Transaksi Rutin
+          </button>
+        </div>
+        <div id="recurring-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
 
       <!-- Cockpit Visual Analytics Row -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -555,8 +597,28 @@
               </button>
             </div>
 
+            <!-- Import Bank CSV -->
+            <div class="skeuo-card-flat p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-sky-500/30">
+              <div class="flex items-center gap-3">
+                <div class="p-2.5 skeuo-sunken rounded-xl text-sky-400">
+                  <i data-lucide="file-input" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h5 class="font-bold text-sm text-slate-100">Impor Mutasi Bank dari CSV</h5>
+                  <p class="text-xs text-slate-400">Unggah file .csv mutasi rekening bank (Tanggal, Nominal, Catatan) untuk konversi ke transaksi.</p>
+                </div>
+              </div>
+              <div>
+                <input type="file" id="import-bank-csv-file" onchange="handleBankCSVImport(event)" accept=".csv" class="hidden">
+                <button onclick="document.getElementById('import-bank-csv-file').click()" class="skeuo-btn skeuo-btn-primary px-4 py-2 text-xs uppercase tracking-wider font-bold rounded-lg shrink-0">
+                  <i data-lucide="file-text" class="w-3.5 h-3.5 mr-1.5"></i> Impor CSV Bank
+                </button>
+              </div>
+            </div>
+
             <!-- Import JSON -->
             <div class="skeuo-card-flat p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+
               <div class="flex items-center gap-3">
                 <div class="p-2.5 skeuo-sunken rounded-xl text-amber-400">
                   <i data-lucide="upload-cloud" class="w-5 h-5"></i>
@@ -752,9 +814,81 @@
     </div>
   </div>
 
+  <!-- MODAL 3: TAMBAH TARGET MENABUNG (GOAL) -->
+  <div id="modal-goal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="skeuo-modal-box max-w-md w-full p-6 space-y-4 relative">
+      <div class="flex justify-between items-center border-b border-slate-800/80 pb-3">
+        <h4 class="font-extrabold text-sm font-mono metallic-text uppercase">Tambah Target Menabung (Goal)</h4>
+        <button onclick="toggleModal('modal-goal', false)" class="text-slate-400 hover:text-white text-lg font-bold">&times;</button>
+      </div>
+      <form id="form-goal" onsubmit="handleGoalSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Nama Target</label>
+          <input type="text" id="goal-name" required placeholder="misal: DP Rumah / Mobil" class="skeuo-input w-full px-3 py-2 text-xs">
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Target Nominal (Rp)</label>
+          <input type="number" id="goal-target" required min="100000" class="skeuo-input w-full px-3 py-2 text-xs font-mono">
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Saldo Terkumpul Saat Ini (Rp)</label>
+          <input type="number" id="goal-current" value="0" class="skeuo-input w-full px-3 py-2 text-xs font-mono">
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Tenggat Waktu (Deadline)</label>
+          <input type="date" id="goal-deadline" required class="skeuo-input w-full px-3 py-2 text-xs">
+        </div>
+        <div class="flex justify-end gap-2.5 pt-3 border-t border-slate-800/80">
+          <button type="button" onclick="toggleModal('modal-goal', false)" class="skeuo-btn skeuo-btn-secondary px-4 py-2 text-xs">Batal</button>
+          <button type="submit" class="skeuo-btn skeuo-btn-primary px-5 py-2 text-xs">Simpan Target</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 4: TAMBAH TRANSAKSI RUTIN (RECURRING) -->
+  <div id="modal-recurring" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="skeuo-modal-box max-w-md w-full p-6 space-y-4 relative">
+      <div class="flex justify-between items-center border-b border-slate-800/80 pb-3">
+        <h4 class="font-extrabold text-sm font-mono metallic-text uppercase">Tambah Transaksi Rutin Berulang</h4>
+        <button onclick="toggleModal('modal-recurring', false)" class="text-slate-400 hover:text-white text-lg font-bold">&times;</button>
+      </div>
+      <form id="form-recurring" onsubmit="handleRecurringSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Nama Transaksi Rutin</label>
+          <input type="text" id="rec-name" required placeholder="misal: Langganan WiFi / Kos" class="skeuo-input w-full px-3 py-2 text-xs">
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Tipe</label>
+          <select id="rec-type" class="skeuo-select w-full px-3 py-2 text-xs">
+            <option value="expense">Pengeluaran Rutin</option>
+            <option value="income">Pemasukan Rutin</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Nominal (Rp)</label>
+          <input type="number" id="rec-amount" required min="1" class="skeuo-input w-full px-3 py-2 text-xs font-mono">
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Dompet / Rekening</label>
+          <select id="rec-wallet" class="skeuo-select w-full px-3 py-2 text-xs"></select>
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Kategori</label>
+          <select id="rec-category" class="skeuo-select w-full px-3 py-2 text-xs"></select>
+        </div>
+        <div class="flex justify-end gap-2.5 pt-3 border-t border-slate-800/80">
+          <button type="button" onclick="toggleModal('modal-recurring', false)" class="skeuo-btn skeuo-btn-secondary px-4 py-2 text-xs">Batal</button>
+          <button type="submit" class="skeuo-btn skeuo-btn-emerald px-5 py-2 text-xs">Simpan Otomatisasi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- APPLICATION SCRIPTS -->
   <script src="assets/js/utils.js"></script>
   <script src="assets/js/state.js"></script>
   <script src="assets/js/app.js"></script>
 </body>
 </html>
+

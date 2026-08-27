@@ -3,12 +3,42 @@
  */
 
 function formatCurrency(amount, currency = "IDR", locale = "id-ID") {
+  if (window.store && window.store.getState().settings.stealthMode) {
+    return "Rp ••••••••";
+  }
   const num = parseFloat(amount) || 0;
   return new Intl.NumberFormat(locale, {
     style: "currency",
     currency: currency,
     maximumFractionDigits: 0
   }).format(num);
+}
+
+function parseBankCSV(csvText) {
+  const lines = csvText.split(/\r?\n/).filter((l) => l.trim().length > 0);
+  const parsedTx = [];
+
+  lines.forEach((line) => {
+    // Basic CSV Line split ignoring quotes
+    const parts = line.split(",").map((p) => p.replace(/^"|"$/g, "").trim());
+    if (parts.length >= 3) {
+      const dateStr = parts[0];
+      const amountStr = parts[1].replace(/[^0-9.-]/g, "");
+      const notes = parts[2] || "Impor Bank";
+      const amount = parseFloat(amountStr);
+
+      if (!isNaN(amount) && amount !== 0) {
+        parsedTx.push({
+          date: dateStr.match(/^\d{4}-\d{2}-\d{2}$/) ? dateStr : new Date().toISOString().split("T")[0],
+          type: amount < 0 ? "expense" : "income",
+          amount: Math.abs(amount),
+          notes: notes
+        });
+      }
+    }
+  });
+
+  return parsedTx;
 }
 
 function formatCompactNumber(amount) {

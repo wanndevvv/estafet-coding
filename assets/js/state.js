@@ -9,13 +9,15 @@ const DEFAULT_STATE = {
     currency: "IDR",
     locale: "id-ID",
     theme: "navy-skeuomorph",
-    lastSync: new Date().toISOString()
+    lastSync: new Date().toISOString(),
+    stealthMode: false,
+    securityPin: null // String e.g. "1234"
   },
   wallets: [
     {
       id: "w_main",
       name: "Rekening Utama (BCA)",
-      type: "bank", // 'bank' | 'cash' | 'ewallet'
+      type: "bank",
       balance: 14500000,
       color: "#2563EB"
     },
@@ -44,20 +46,38 @@ const DEFAULT_STATE = {
     { id: "cat_exp_5", name: "Investasi & Tabungan", type: "expense", color: "#8B5CF6" }
   ],
   budgets: [
+    { id: "b_1", categoryId: "cat_exp_1", monthlyLimit: 2500000 },
+    { id: "b_2", categoryId: "cat_exp_2", monthlyLimit: 1200000 },
+    { id: "b_3", categoryId: "cat_exp_3", monthlyLimit: 1500000 }
+  ],
+  recurring: [
     {
-      id: "b_1",
-      categoryId: "cat_exp_1",
-      monthlyLimit: 2500000
-    },
-    {
-      id: "b_2",
-      categoryId: "cat_exp_2",
-      monthlyLimit: 1200000
-    },
-    {
-      id: "b_3",
+      id: "rec_1",
+      name: "Langganan Netflix & Spotify",
+      amount: 250000,
+      type: "expense",
+      walletId: "w_main",
       categoryId: "cat_exp_3",
-      monthlyLimit: 1500000
+      frequency: "monthly",
+      lastProcessed: "2026-08-01"
+    }
+  ],
+  goals: [
+    {
+      id: "g_1",
+      name: "Dana Darurat (6 Bulan)",
+      targetAmount: 30000000,
+      currentAmount: 12500000,
+      deadline: "2026-12-31",
+      color: "#38BDF8"
+    },
+    {
+      id: "g_2",
+      name: "Laptop Workstation Baru",
+      targetAmount: 20000000,
+      currentAmount: 8500000,
+      deadline: "2027-03-31",
+      color: "#F59E0B"
     }
   ],
   transactions: [
@@ -69,7 +89,8 @@ const DEFAULT_STATE = {
       walletId: "w_cash",
       targetWalletId: null,
       categoryId: "cat_exp_1",
-      notes: "Makan siang Bento & Es Teh"
+      notes: "Makan siang Bento & Es Teh",
+      tags: ["kuliner", "rutin"]
     },
     {
       id: "tx_102",
@@ -79,7 +100,8 @@ const DEFAULT_STATE = {
       walletId: "w_main",
       targetWalletId: null,
       categoryId: "cat_inc_1",
-      notes: "Gaji Bulanan PT Tech Nusantara"
+      notes: "Gaji Bulanan PT Tech Nusantara",
+      tags: ["gaji"]
     },
     {
       id: "tx_103",
@@ -89,7 +111,8 @@ const DEFAULT_STATE = {
       walletId: "w_main",
       targetWalletId: null,
       categoryId: "cat_exp_3",
-      notes: "Tagihan Listrik PLN & Internet Wi-Fi"
+      notes: "Tagihan Listrik PLN & Internet Wi-Fi",
+      tags: ["tagihan"]
     },
     {
       id: "tx_104",
@@ -99,7 +122,8 @@ const DEFAULT_STATE = {
       walletId: "w_main",
       targetWalletId: "w_ewallet",
       categoryId: null,
-      notes: "Top-up saldo GoPay / OVO"
+      notes: "Top-up saldo GoPay / OVO",
+      tags: ["topup"]
     },
     {
       id: "tx_105",
@@ -109,7 +133,8 @@ const DEFAULT_STATE = {
       walletId: "w_ewallet",
       targetWalletId: null,
       categoryId: "cat_exp_2",
-      notes: "Bensin Pertamax & Parkir"
+      notes: "Bensin Pertamax & Parkir",
+      tags: ["transport"]
     }
   ]
 };
@@ -125,7 +150,6 @@ class StateManager {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        // Ensure defaults merge if older format
         return {
           ...DEFAULT_STATE,
           ...parsed,
@@ -133,6 +157,8 @@ class StateManager {
           wallets: parsed.wallets || DEFAULT_STATE.wallets,
           categories: parsed.categories || DEFAULT_STATE.categories,
           budgets: parsed.budgets || DEFAULT_STATE.budgets,
+          recurring: parsed.recurring || DEFAULT_STATE.recurring,
+          goals: parsed.goals || DEFAULT_STATE.goals,
           transactions: parsed.transactions || DEFAULT_STATE.transactions
         };
       }
@@ -306,6 +332,85 @@ class StateManager {
       this.saveState();
     }
   }
+
+  // ==================== RECURRING TRANSACTIONS ====================
+  addRecurring(rec) {
+    rec.id = "rec_" + Date.now();
+    rec.amount = parseFloat(rec.amount);
+    this.state.recurring.push(rec);
+    this.saveState();
+    return rec;
+  }
+
+  deleteRecurring(id) {
+    const idx = this.state.recurring.findIndex((r) => r.id === id);
+    if (idx !== -1) {
+      this.state.recurring.splice(idx, 1);
+      this.saveState();
+    }
+  }
+
+  processDueRecurring() {
+    const today = new Date().toISOString().split("T")[0];
+    let count = 0;
+    this.state.recurring.forEach((rec) => {
+      if (rec.lastProcessed !== today) {
+        this.addTransaction({
+          date: today,
+          type: rec.type,
+          amount: rec.amount,
+          walletId: rec.walletId,
+          targetWalletId: null,
+          categoryId: rec.categoryId,
+          notes: `[Otomatis] ${rec.name}`,
+          tags: ["rutin", "otomatis"]
+        });
+        rec.lastProcessed = today;
+        count++;
+      }
+    });
+    if (count > 0) this.saveState();
+    return count;
+  }
+
+  // ==================== FINANCIAL GOALS ====================
+  addGoal(goal) {
+    goal.id = "g_" + Date.now();
+    goal.targetAmount = parseFloat(goal.targetAmount);
+    goal.currentAmount = parseFloat(goal.currentAmount) || 0;
+    this.state.goals.push(goal);
+    this.saveState();
+    return goal;
+  }
+
+  updateGoalDeposit(id, depositAmount) {
+    const goal = this.state.goals.find((g) => g.id === id);
+    if (goal) {
+      goal.currentAmount += parseFloat(depositAmount);
+      this.saveState();
+    }
+  }
+
+  deleteGoal(id) {
+    const idx = this.state.goals.findIndex((g) => g.id === id);
+    if (idx !== -1) {
+      this.state.goals.splice(idx, 1);
+      this.saveState();
+    }
+  }
+
+  // ==================== STEALTH & SECURITY ====================
+  toggleStealthMode() {
+    this.state.settings.stealthMode = !this.state.settings.stealthMode;
+    this.saveState();
+    return this.state.settings.stealthMode;
+  }
+
+  setSecurityPin(pin) {
+    this.state.settings.securityPin = pin || null;
+    this.saveState();
+  }
 }
 
 const store = new StateManager();
+

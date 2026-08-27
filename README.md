@@ -1,6 +1,6 @@
 # Blueprint Arsitektur Aplikasi: Personal Financial Cockpit
 
-Dokumen spesifikasi teknis, rancangan arsitektur, struktur data, dan matriks fungsional aplikasi dashboard keuangan personal berbasis client-side (HTML5, Tailwind CSS via CDN, dan Vanilla JavaScript).
+Dokumen spesifikasi teknis, skema data, dan matriks fungsional aplikasi dashboard keuangan personal berbasis client-side (HTML5, Tailwind CSS via CDN, dan Vanilla JavaScript).
 
 ---
 
@@ -15,38 +15,7 @@ Dokumen spesifikasi teknis, rancangan arsitektur, struktur data, dan matriks fun
 
 ---
 
-## 2. Wireframe & Hirarki Komponen UI
-
-+-----------------------------------------------------------------------------------------+
-| [Header] Logo App | Total Net Worth | Aksi Cepat (+ Transaksi, Backup/Restore JSON)    |
-+-----------------------------------------------------------------------------------------+
-| [Navigation Tabs] Dashboard | Transaksi | Multi-Wallet | Anggaran | Simulator Tabungan   |
-+-----------------------------------------------------------------------------------------+
-| [Overview Metric Cards]                                                                 |
-| +-------------------+ +-------------------+ +-------------------+ +-------------------+ |
-| | Total Saldo Kas   | | Pemasukan (Bulan) | | Pengeluaran (Bln) | | Savings Rate (%)  | |
-| +-------------------+ +-------------------+ +-------------------+ +-------------------+ |
-|                                                                                         |
-| [Analytics Section]                                                                     |
-| +-----------------------------------------+ +-----------------------------------------+ |
-| | Line Chart: Arus Kas Bulanan (6 Bulan)  | | Donut Chart: Proporsi Belanja Kategori  | |
-| +-----------------------------------------+ +-----------------------------------------+ |
-|                                                                                         |
-| [Transaction Management & Table Toolbar]                                                |
-| [ Input Cari... ] [ Filter: Kategori ] [ Filter: Dompet ] [ Rentang Tanggal ] [ Export ]|
-| +-------------------------------------------------------------------------------------+ |
-| | Tanggal    | Keterangan      | Dompet   | Kategori    | Tipe    | Jumlah   | Aksi   | |
-| |------------|-----------------|----------|-------------|---------|----------|--------| |
-| | 2026-08-20 | Gaji Pokok      | Bank A   | Pendapatan  | Pemasukan| +10.000k | Hapus  | |
-| | 2026-08-21 | Makan Siang     | Tunai    | Makanan     | Pengeluaran| -35.000| Hapus  | |
-| +-------------------------------------------------------------------------------------+ |
-+-----------------------------------------------------------------------------------------+
-| [Modals] Form Tambah Transaksi | Form Tambah/Transfer Dompet | Atur Batas Anggaran      |
-+-----------------------------------------------------------------------------------------+
-
----
-
-## 3. Skema Data Global (State Structure)
+## 2. Skema Data Global (State Structure)
 
 const AppState = {
   settings: {
@@ -100,7 +69,7 @@ const AppState = {
 
 ---
 
-## 4. Spesifikasi Fungsional & Matriks Modul
+## 3. Spesifikasi Fungsional & Matriks Modul
 
 ### A. Modul Akuntansi & Dompet (Wallet Management)
 * **Pencatatan Multi-Wallet:** Saldo tiap dompet dihitung secara mandiri.

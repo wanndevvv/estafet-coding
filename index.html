@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Personal Financial Cockpit | Navy Skeuomorphism</title>
+  <title>Personal Financial Cockpit | Clean Light Skeuomorphism</title>
   
   <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,40 +19,40 @@
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
-  <!-- Skeuomorphic Navy Design System Stylesheet -->
+  <!-- Skeuomorphic Light Design System Stylesheet -->
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body class="h-full flex flex-col antialiased selection:bg-sky-500 selection:text-white">
+<body class="h-full flex flex-col antialiased selection:bg-sky-500 selection:text-white text-slate-800">
 
   <!-- Toast Notification Floating Container -->
   <div id="cockpit-toast-container" class="fixed top-20 right-6 z-50 flex flex-col gap-3 max-w-sm w-full pointer-events-none *:pointer-events-auto"></div>
 
-  <!-- HEADER / COCKPIT COMMAND BAR -->
-  <header class="skeuo-navbar sticky top-0 z-40 px-4 sm:px-6 lg:px-8 py-3">
+  <!-- HEADER / COMMAND BAR -->
+  <header class="skeuo-navbar sticky top-0 z-40 px-4 sm:px-6 lg:px-8 py-3.5">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
       
-      <!-- Brand Plate / Cockpit Identity -->
+      <!-- Brand Plate -->
       <div class="flex items-center justify-between w-full md:w-auto">
         <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 rounded-xl skeuo-panel flex items-center justify-center border-sky-400/40 shadow-[0_0_15px_rgba(56,189,248,0.3)]">
-            <i data-lucide="gauge" class="w-5 h-5 text-sky-400"></i>
+          <div class="w-10 h-10 rounded-xl skeuo-panel flex items-center justify-center border-sky-400/50 shadow-[0_2px_8px_rgba(2,132,199,0.15)]">
+            <i data-lucide="gauge" class="w-5 h-5 text-sky-600"></i>
           </div>
           <div>
             <div class="flex items-center gap-2">
               <span class="font-extrabold text-lg tracking-tight metallic-text uppercase font-mono">FINANCIAL COCKPIT</span>
               <span class="skeuo-led skeuo-led-green" title="System Live"></span>
             </div>
-            <p class="text-[10px] font-mono text-sky-300/70 tracking-wider">NAVY TACTICAL SKEUOMORPHISM UI</p>
+            <p class="text-[11px] font-mono text-slate-500 tracking-wider">CLEAN LIGHT SKEUOMORPHISM UI</p>
           </div>
         </div>
 
         <!-- Mobile Quick Action Button -->
-        <button onclick="toggleModal('modal-transaction', true)" class="md:hidden skeuo-btn skeuo-btn-primary p-2 rounded-lg">
-          <i data-lucide="plus" class="w-5 h-5"></i>
+        <button onclick="toggleModal('modal-transaction', true)" class="md:hidden skeuo-btn skeuo-btn-primary p-2.5 rounded-lg">
+          <i data-lucide="plus" class="w-5 h-5 text-white"></i>
         </button>
       </div>
 
-      <!-- Segmented Cockpit Navigation Switch -->
+      <!-- Segmented Navigation Switch -->
       <nav class="skeuo-nav-track flex items-center p-1 w-full md:w-auto overflow-x-auto justify-start md:justify-center">
         <button onclick="switchTab('dashboard')" id="nav-dashboard" class="skeuo-nav-btn active flex items-center gap-2 px-3.5 py-2 text-xs uppercase tracking-wider whitespace-nowrap">
           <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
@@ -70,13 +70,13 @@
 
       <!-- Desktop Quick Action Button & Security Switches -->
       <div class="hidden md:flex items-center gap-3">
-        <button onclick="toggleStealthUI()" id="btn-stealth-mode" title="Mode Penyamaran Saldo" class="skeuo-btn skeuo-btn-secondary p-2 rounded-xl text-sky-400">
+        <button onclick="toggleStealthUI()" id="btn-stealth-mode" title="Mode Penyamaran Saldo" class="skeuo-btn skeuo-btn-secondary p-2 rounded-xl text-sky-600">
           <i data-lucide="eye" class="w-4 h-4"></i>
         </button>
-        <button onclick="promptSecurityPin()" id="btn-pin-mode" title="Kunci PIN Keamanan" class="skeuo-btn skeuo-btn-secondary p-2 rounded-xl text-amber-400">
+        <button onclick="promptSecurityPin()" id="btn-pin-mode" title="Kunci PIN Keamanan" class="skeuo-btn skeuo-btn-secondary p-2 rounded-xl text-amber-600">
           <i data-lucide="lock" class="w-4 h-4"></i>
         </button>
-        <button onclick="toggleModal('modal-transaction', true)" class="skeuo-btn skeuo-btn-primary px-4 py-2 text-xs uppercase tracking-wider flex items-center gap-2 shadow-[0_0_15px_rgba(2,132,199,0.4)]">
+        <button onclick="toggleModal('modal-transaction', true)" class="skeuo-btn skeuo-btn-primary px-4 py-2 text-xs uppercase tracking-wider flex items-center gap-2">
           <i data-lucide="plus-circle" class="w-4 h-4"></i> Catat Transaksi
         </button>
       </div>
@@ -84,20 +84,19 @@
     </div>
   </header>
 
-
   <!-- MAIN VIEWPORT CONTENT -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
     <!-- ====================================================================
-         TAB 1: DASHBOARD COCKPIT
+         TAB 1: DASHBOARD
          ==================================================================== -->
     <section id="tab-dashboard" class="space-y-6">
       
-      <!-- Top Metrics Cockpit Displays -->
+      <!-- Top Metrics Displays -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
         
-        <!-- Net Worth Primary Readout -->
-        <div class="skeuo-panel p-6 flex flex-col justify-between relative overflow-hidden group">
+        <!-- Net Worth Readout -->
+        <div class="skeuo-panel p-6 flex flex-col justify-between relative overflow-hidden">
           <div class="skeuo-rivet top-left"></div>
           <div class="skeuo-rivet top-right"></div>
           <div class="skeuo-rivet bottom-left"></div>
@@ -106,20 +105,20 @@
           <div class="flex items-center justify-between mb-2">
             <div class="flex items-center gap-2">
               <div class="skeuo-led skeuo-led-cyan"></div>
-              <span class="engraved-heading text-xs">Total Net Worth</span>
+              <span class="engraved-heading text-xs font-bold">Total Net Worth</span>
             </div>
-            <div class="p-2 skeuo-sunken rounded-lg text-sky-400">
+            <div class="p-2 skeuo-sunken rounded-lg text-sky-600">
               <i data-lucide="shield-check" class="w-5 h-5"></i>
             </div>
           </div>
 
           <div class="my-2">
-            <h3 id="stat-net-worth" class="text-3xl sm:text-4xl font-extrabold font-mono metallic-text tracking-tight">Rp 0</h3>
+            <h3 id="stat-net-worth" class="text-3xl sm:text-4xl font-extrabold font-mono text-slate-900 tracking-tight">Rp 0</h3>
           </div>
 
-          <div class="flex items-center justify-between text-[11px] pt-3 border-t border-slate-800/80 text-slate-400 font-mono">
-            <span>STATUS: <strong class="text-emerald-400">LIKUID & AKTIF</strong></span>
-            <span id="stat-wallet-count" class="text-sky-300 font-bold">3 Dompet Aktif</span>
+          <div class="flex items-center justify-between text-[11px] pt-3 border-t border-slate-200 text-slate-500 font-mono">
+            <span>STATUS: <strong class="text-emerald-600 font-bold">LIKUID & AKTIF</strong></span>
+            <span id="stat-wallet-count" class="text-sky-700 font-bold">3 Dompet Aktif</span>
           </div>
         </div>
 
@@ -133,20 +132,20 @@
           <div class="flex items-center justify-between mb-2">
             <div class="flex items-center gap-2">
               <div class="skeuo-led skeuo-led-green"></div>
-              <span class="engraved-heading text-xs text-emerald-400/90">Total Pemasukan</span>
+              <span class="engraved-heading text-xs text-emerald-700 font-bold">Total Pemasukan</span>
             </div>
-            <div class="p-2 skeuo-sunken rounded-lg text-emerald-400">
+            <div class="p-2 skeuo-sunken rounded-lg text-emerald-600">
               <i data-lucide="arrow-down-left" class="w-5 h-5"></i>
             </div>
           </div>
 
           <div class="my-2">
-            <h3 id="stat-income" class="text-3xl font-extrabold font-mono emerald-text tracking-tight">Rp 0</h3>
+            <h3 id="stat-income" class="text-3xl font-extrabold font-mono text-emerald-600 tracking-tight">Rp 0</h3>
           </div>
 
-          <div class="flex items-center justify-between text-[11px] pt-3 border-t border-slate-800/80 text-slate-400 font-mono">
+          <div class="flex items-center justify-between text-[11px] pt-3 border-t border-slate-200 text-slate-500 font-mono">
             <span>CASH-INFLOW</span>
-            <span class="text-emerald-400 font-semibold flex items-center gap-1"><i data-lucide="trending-up" class="w-3 h-3"></i> Akumulasi Positif</span>
+            <span class="text-emerald-700 font-semibold flex items-center gap-1"><i data-lucide="trending-up" class="w-3.5 h-3.5"></i> Akumulasi Positif</span>
           </div>
         </div>
 
@@ -160,20 +159,20 @@
           <div class="flex items-center justify-between mb-2">
             <div class="flex items-center gap-2">
               <div class="skeuo-led skeuo-led-red"></div>
-              <span class="engraved-heading text-xs text-rose-400/90">Total Pengeluaran</span>
+              <span class="engraved-heading text-xs text-rose-700 font-bold">Total Pengeluaran</span>
             </div>
-            <div class="p-2 skeuo-sunken rounded-lg text-rose-400">
+            <div class="p-2 skeuo-sunken rounded-lg text-rose-600">
               <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
             </div>
           </div>
 
           <div class="my-2">
-            <h3 id="stat-expense" class="text-3xl font-extrabold font-mono rose-text tracking-tight">Rp 0</h3>
+            <h3 id="stat-expense" class="text-3xl font-extrabold font-mono text-rose-600 tracking-tight">Rp 0</h3>
           </div>
 
-          <div class="flex items-center justify-between text-[11px] pt-3 border-t border-slate-800/80 text-slate-400 font-mono">
+          <div class="flex items-center justify-between text-[11px] pt-3 border-t border-slate-200 text-slate-500 font-mono">
             <span>NET SURPLUS:</span>
-            <span id="stat-savings" class="text-emerald-400 font-bold">+Rp 0</span>
+            <span id="stat-savings" class="text-emerald-600 font-bold">+Rp 0</span>
           </div>
         </div>
 
@@ -182,20 +181,20 @@
       <!-- Wallets & Budget Section -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        <!-- Wallets (Physical Credit Cards) -->
+        <!-- Wallets Grid -->
         <div class="skeuo-panel p-6 lg:col-span-2 relative">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 border-b border-slate-800/80 pb-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 border-b border-slate-200 pb-3">
             <div class="flex items-center gap-2.5">
-              <div class="p-2 skeuo-sunken rounded-lg text-sky-400">
+              <div class="p-2 skeuo-sunken rounded-lg text-sky-600">
                 <i data-lucide="credit-card" class="w-4 h-4"></i>
               </div>
               <div>
-                <h4 class="font-bold text-sm text-slate-100 tracking-wide">AKUN & REKENING DOMPET</h4>
-                <p class="text-[11px] text-slate-400 font-mono">Multi-wallet balance & liquidity tracking</p>
+                <h4 class="font-bold text-sm text-slate-900 tracking-wide">AKUN & REKENING DOMPET</h4>
+                <p class="text-[11px] text-slate-500 font-mono">Multi-wallet balance & liquidity tracking</p>
               </div>
             </div>
             <button onclick="toggleModal('modal-wallet', true)" class="skeuo-btn skeuo-btn-secondary text-xs px-3.5 py-1.5 rounded-lg flex items-center gap-1.5 self-start sm:self-auto">
-              <i data-lucide="plus" class="w-3.5 h-3.5 text-sky-400"></i> Tambah Dompet
+              <i data-lucide="plus" class="w-3.5 h-3.5 text-sky-600"></i> Tambah Dompet
             </button>
           </div>
 
@@ -204,40 +203,40 @@
           </div>
         </div>
 
-        <!-- Monthly Budget Meter Gauges & Financial Goals -->
+        <!-- Monthly Budget Gauges & Goals -->
         <div class="skeuo-panel p-6 relative flex flex-col justify-between space-y-5">
           <div>
-            <div class="flex items-center justify-between mb-4 border-b border-slate-800/80 pb-3">
+            <div class="flex items-center justify-between mb-4 border-b border-slate-200 pb-3">
               <div class="flex items-center gap-2.5">
-                <div class="p-2 skeuo-sunken rounded-lg text-sky-400">
+                <div class="p-2 skeuo-sunken rounded-lg text-sky-600">
                   <i data-lucide="pie-chart" class="w-4 h-4"></i>
                 </div>
                 <div>
-                  <h4 class="font-bold text-sm text-slate-100 tracking-wide">BUDGET GAUGE</h4>
-                  <p class="text-[11px] text-slate-400 font-mono">Limit pemakaian bulanan</p>
+                  <h4 class="font-bold text-sm text-slate-900 tracking-wide">BUDGET GAUGE</h4>
+                  <p class="text-[11px] text-slate-500 font-mono">Limit pemakaian bulanan</p>
                 </div>
               </div>
             </div>
 
-            <div id="budget-meter-container" class="space-y-4">
+            <div id="budget-meter-container" class="space-y-3.5">
               <!-- Rendered by JS -->
             </div>
           </div>
 
           <!-- TARGET MENABUNG (FINANCIAL GOALS) -->
-          <div class="pt-4 border-t border-slate-800/80">
+          <div class="pt-4 border-t border-slate-200">
             <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-bold text-sky-400 font-mono flex items-center gap-1.5">
-                <i data-lucide="target" class="w-4 h-4"></i> TARGET MENABUNG (GOALS)
+              <span class="text-xs font-bold text-sky-700 font-mono flex items-center gap-1.5">
+                <i data-lucide="target" class="w-4 h-4 text-sky-600"></i> TARGET MENABUNG (GOALS)
               </span>
-              <button onclick="toggleModal('modal-goal', true)" class="text-[10px] bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded border border-sky-500/30">+ Target</button>
+              <button onclick="toggleModal('modal-goal', true)" class="text-[11px] font-bold bg-sky-50 hover:bg-sky-100 text-sky-700 px-2.5 py-1 rounded-md border border-sky-300 transition">+ Target</button>
             </div>
             <div id="goals-list-container" class="space-y-3">
               <!-- Rendered by JS -->
             </div>
           </div>
 
-          <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 font-mono">
+          <div class="pt-3 border-t border-slate-200 flex items-center justify-between text-[11px] text-slate-500 font-mono">
             <span class="flex items-center gap-1.5"><span class="skeuo-led skeuo-led-cyan"></span> Normal &lt;80%</span>
             <span class="flex items-center gap-1.5"><span class="skeuo-led skeuo-led-amber"></span> Warning 80%</span>
             <span class="flex items-center gap-1.5"><span class="skeuo-led skeuo-led-red"></span> Overlimit</span>
@@ -248,18 +247,18 @@
 
       <!-- RECURRING TRANSACTIONS & AUTOMATION PANEL -->
       <div class="skeuo-panel p-6">
-        <div class="flex items-center justify-between mb-4 border-b border-slate-800/80 pb-3">
+        <div class="flex items-center justify-between mb-4 border-b border-slate-200 pb-3">
           <div class="flex items-center gap-2.5">
-            <div class="p-2 skeuo-sunken rounded-lg text-emerald-400">
+            <div class="p-2 skeuo-sunken rounded-lg text-emerald-600">
               <i data-lucide="repeat" class="w-4 h-4"></i>
             </div>
             <div>
-              <h4 class="font-bold text-sm text-slate-100 uppercase tracking-wider">TRANSAKSI RUTIN BERULANG (AUTOMATION)</h4>
-              <p class="text-[11px] text-slate-400 font-mono">Otomatisasi pencatatan tagihan & gaji berkala</p>
+              <h4 class="font-bold text-sm text-slate-900 uppercase tracking-wider">TRANSAKSI RUTIN BERULANG (AUTOMATION)</h4>
+              <p class="text-[11px] text-slate-500 font-mono">Otomatisasi pencatatan tagihan & gaji berkala</p>
             </div>
           </div>
           <button onclick="toggleModal('modal-recurring', true)" class="skeuo-btn skeuo-btn-secondary text-xs px-3 py-1.5 rounded-lg flex items-center gap-1">
-            <i data-lucide="plus" class="w-3.5 h-3.5 text-emerald-400"></i> Tambah Transaksi Rutin
+            <i data-lucide="plus" class="w-3.5 h-3.5 text-emerald-600"></i> Tambah Transaksi Rutin
           </button>
         </div>
         <div id="recurring-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -267,36 +266,35 @@
         </div>
       </div>
 
-
-      <!-- Cockpit Visual Analytics Row -->
+      <!-- Visual Analytics Row -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         <!-- Category Doughnut Chart -->
         <div class="skeuo-panel p-6">
-          <div class="flex items-center justify-between mb-4 border-b border-slate-800/80 pb-3">
+          <div class="flex items-center justify-between mb-4 border-b border-slate-200 pb-3">
             <div class="flex items-center gap-2">
-              <div class="p-1.5 skeuo-sunken rounded text-sky-400">
+              <div class="p-1.5 skeuo-sunken rounded text-sky-600">
                 <i data-lucide="donut" class="w-4 h-4"></i>
               </div>
-              <h4 class="font-bold text-sm text-slate-200 uppercase tracking-wider">Alokasi Pengeluaran per Kategori</h4>
+              <h4 class="font-bold text-sm text-slate-900 uppercase tracking-wider">Alokasi Pengeluaran per Kategori</h4>
             </div>
-            <span class="text-[10px] font-mono text-slate-400 px-2 py-0.5 skeuo-sunken rounded">DONUT BREAKDOWN</span>
+            <span class="text-[10px] font-mono text-slate-500 px-2 py-0.5 skeuo-sunken rounded">DONUT BREAKDOWN</span>
           </div>
           <div class="h-64 flex justify-center items-center">
             <canvas id="chart-category"></canvas>
           </div>
         </div>
 
-        <!-- Cashflow Bar Chart -->
+        <!-- Cashflow Monthly Bar Chart -->
         <div class="skeuo-panel p-6">
-          <div class="flex items-center justify-between mb-4 border-b border-slate-800/80 pb-3">
+          <div class="flex items-center justify-between mb-4 border-b border-slate-200 pb-3">
             <div class="flex items-center gap-2">
-              <div class="p-1.5 skeuo-sunken rounded text-sky-400">
+              <div class="p-1.5 skeuo-sunken rounded text-sky-600">
                 <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
               </div>
-              <h4 class="font-bold text-sm text-slate-200 uppercase tracking-wider">Cashflow Masuk vs Keluar</h4>
+              <h4 class="font-bold text-sm text-slate-900 uppercase tracking-wider">Arus Kas Bulanan (Inflow vs Outflow)</h4>
             </div>
-            <span class="text-[10px] font-mono text-slate-400 px-2 py-0.5 skeuo-sunken rounded">AGGREGATE BARS</span>
+            <span class="text-[10px] font-mono text-slate-500 px-2 py-0.5 skeuo-sunken rounded">MONTHLY TRACKER</span>
           </div>
           <div class="h-64">
             <canvas id="chart-cashflow"></canvas>
@@ -315,33 +313,33 @@
       <!-- Section Header -->
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h3 class="text-xl font-extrabold metallic-text uppercase tracking-wide flex items-center gap-2 font-mono">
-            <i data-lucide="receipt" class="w-5 h-5 text-sky-400"></i> Mutasi Transaksi & Akuntansi
+          <h3 class="text-xl font-extrabold text-slate-900 uppercase tracking-wide flex items-center gap-2 font-mono">
+            <i data-lucide="receipt" class="w-5 h-5 text-sky-600"></i> Mutasi Transaksi & Akuntansi
           </h3>
-          <p class="text-xs text-slate-400 font-mono mt-0.5">Pencatatan real-time multi-kriteria dengan auto-rollback saldo</p>
+          <p class="text-xs text-slate-500 font-mono mt-0.5">Pencatatan real-time multi-kriteria dengan auto-rollback saldo</p>
         </div>
-        <button onclick="toggleModal('modal-transaction', true)" class="skeuo-btn skeuo-btn-primary px-4 py-2.5 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(2,132,199,0.4)]">
+        <button onclick="toggleModal('modal-transaction', true)" class="skeuo-btn skeuo-btn-primary px-4 py-2.5 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2">
           <i data-lucide="plus-circle" class="w-4 h-4"></i> Catat Transaksi Baru
         </button>
       </div>
 
       <!-- Real-Time Filter & Search Console -->
       <div class="skeuo-panel p-5 space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
-          <span class="text-xs font-bold font-mono text-sky-400 flex items-center gap-2">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+          <span class="text-xs font-bold font-mono text-sky-700 flex items-center gap-2">
             <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i> FILTER & SORTING CONSOLE
           </span>
-          <button onclick="resetTxFilters()" class="text-[11px] font-semibold text-slate-400 hover:text-sky-300 transition flex items-center gap-1">
+          <button onclick="resetTxFilters()" class="text-[11px] font-semibold text-slate-500 hover:text-sky-700 transition flex items-center gap-1">
             <i data-lucide="rotate-ccw" class="w-3 h-3"></i> Reset Filter
           </button>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           
           <!-- Search Input -->
           <div class="relative">
-            <input type="text" id="filter-search" oninput="renderTransactions()" placeholder="Cari catatan transaksi..." class="skeuo-input w-full pl-9 pr-3 py-2 text-xs">
-            <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute left-3 top-2.5 pointer-events-none"></i>
+            <input type="text" id="filter-search" oninput="renderTransactions()" placeholder="Cari transaksi..." class="skeuo-input w-full pl-8 pr-3 py-2 text-xs">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5 pointer-events-none"></i>
           </div>
 
           <!-- Category Filter -->
@@ -361,32 +359,43 @@
           <!-- Type Filter -->
           <div>
             <select id="filter-type" onchange="renderTransactions()" class="skeuo-select w-full px-3 py-2 text-xs">
-              <option value="">Semua Tipe Transaksi</option>
+              <option value="">Semua Tipe</option>
               <option value="income">Pemasukan</option>
               <option value="expense">Pengeluaran</option>
               <option value="transfer">Transfer Dompet</option>
             </select>
           </div>
 
-          <!-- Sorting Option -->
+          <!-- Start Date Filter -->
           <div>
-            <select id="filter-sort" onchange="renderTransactions()" class="skeuo-select w-full px-3 py-2 text-xs">
-              <option value="date_desc">Tanggal: Terbaru ➔ Terlama</option>
-              <option value="date_asc">Tanggal: Terlama ➔ Terbaru</option>
-              <option value="amount_desc">Nominal: Terbesar ➔ Terkecil</option>
-              <option value="amount_asc">Nominal: Terkecil ➔ Terbesar</option>
-            </select>
+            <input type="date" id="filter-start-date" onchange="renderTransactions()" title="Tanggal Awal" class="skeuo-input w-full px-3 py-2 text-xs">
+          </div>
+
+          <!-- End Date Filter -->
+          <div>
+            <input type="date" id="filter-end-date" onchange="renderTransactions()" title="Tanggal Akhir" class="skeuo-input w-full px-3 py-2 text-xs">
           </div>
 
         </div>
+
+        <!-- Secondary Sort Row -->
+        <div class="flex items-center justify-end gap-2 pt-1">
+          <label class="text-[11px] font-mono text-slate-500">Urutkan Berdasarkan:</label>
+          <select id="filter-sort" onchange="renderTransactions()" class="skeuo-select max-w-xs px-3 py-1.5 text-xs">
+            <option value="date_desc">Tanggal: Terbaru ➔ Terlama</option>
+            <option value="date_asc">Tanggal: Terlama ➔ Terbaru</option>
+            <option value="amount_desc">Nominal: Terbesar ➔ Terkecil</option>
+            <option value="amount_asc">Nominal: Terkecil ➔ Terbesar</option>
+          </select>
+        </div>
       </div>
 
-      <!-- Ledger Table (Tactile Cockpit Data Table) -->
+      <!-- Ledger Table -->
       <div class="skeuo-panel overflow-hidden">
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs border-collapse">
             <thead>
-              <tr class="skeuo-navbar text-slate-300 font-mono uppercase text-[11px] border-b border-slate-700/80">
+              <tr class="skeuo-sunken text-slate-700 font-mono uppercase text-[11px] border-b border-slate-200">
                 <th class="py-3.5 px-4 font-bold">Tanggal</th>
                 <th class="py-3.5 px-4 font-bold">Tipe</th>
                 <th class="py-3.5 px-4 font-bold">Dompet / Rekening</th>
@@ -396,15 +405,15 @@
                 <th class="py-3.5 px-4 font-bold text-center">Aksi</th>
               </tr>
             </thead>
-            <tbody id="transaction-table-body" class="divide-y divide-slate-800/60 font-sans">
+            <tbody id="transaction-table-body" class="divide-y divide-slate-100 font-sans">
               <!-- Rendered by JS -->
             </tbody>
           </table>
         </div>
 
         <!-- Pagination Controls -->
-        <div class="p-4 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-slate-400">
-          <div id="tx-page-info" class="text-slate-300">
+        <div class="p-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-slate-500">
+          <div id="tx-page-info" class="text-slate-700 font-medium">
             Hal 1 dari 1 (0 data)
           </div>
           <div class="flex items-center gap-2">
@@ -430,21 +439,21 @@
         
         <!-- Controls & Sliders Console -->
         <div class="skeuo-panel p-6 space-y-5">
-          <div class="flex items-center gap-2.5 border-b border-slate-800/80 pb-3">
-            <div class="p-2 skeuo-sunken rounded-lg text-sky-400">
+          <div class="flex items-center gap-2.5 border-b border-slate-200 pb-3">
+            <div class="p-2 skeuo-sunken rounded-lg text-sky-600">
               <i data-lucide="calculator" class="w-4 h-4"></i>
             </div>
             <div>
-              <h4 class="font-bold text-sm text-slate-100 uppercase tracking-wider">SIMULATOR INVESTASI</h4>
-              <p class="text-[11px] text-slate-400 font-mono">Bunga majemuk & setoran berkala</p>
+              <h4 class="font-bold text-sm text-slate-900 uppercase tracking-wider">SIMULATOR INVESTASI</h4>
+              <p class="text-[11px] text-slate-500 font-mono">Bunga majemuk & setoran berkala</p>
             </div>
           </div>
 
           <!-- Parameter 1: Modal Awal -->
           <div class="space-y-1.5">
             <div class="flex justify-between items-center text-xs">
-              <label class="font-bold text-slate-300 uppercase tracking-wide">Modal Awal (Rp)</label>
-              <span class="text-[11px] font-mono text-sky-400">Principal</span>
+              <label class="font-bold text-slate-700 uppercase tracking-wide">Modal Awal (Rp)</label>
+              <span class="text-[11px] font-mono text-sky-600">Principal</span>
             </div>
             <input type="number" id="sim-principal" value="10000000" step="1000000" class="skeuo-input w-full px-3 py-2 text-xs font-mono font-bold">
             <input type="range" id="sim-principal-range" min="0" max="100000000" step="1000000" value="10000000" class="skeuo-slider mt-2">
@@ -453,8 +462,8 @@
           <!-- Parameter 2: Setoran Bulanan -->
           <div class="space-y-1.5">
             <div class="flex justify-between items-center text-xs">
-              <label class="font-bold text-slate-300 uppercase tracking-wide">Setoran Bulanan (Rp)</label>
-              <span class="text-[11px] font-mono text-sky-400">Monthly PMT</span>
+              <label class="font-bold text-slate-700 uppercase tracking-wide">Setoran Bulanan (Rp)</label>
+              <span class="text-[11px] font-mono text-sky-600">Monthly PMT</span>
             </div>
             <input type="number" id="sim-monthly" value="1500000" step="100000" class="skeuo-input w-full px-3 py-2 text-xs font-mono font-bold">
             <input type="range" id="sim-monthly-range" min="0" max="25000000" step="250000" value="1500000" class="skeuo-slider mt-2">
@@ -463,8 +472,8 @@
           <!-- Parameter 3: Return Tahunan -->
           <div class="space-y-1.5">
             <div class="flex justify-between items-center text-xs">
-              <label class="font-bold text-slate-300 uppercase tracking-wide">Estimasi Return per Tahun (%)</label>
-              <span class="text-[11px] font-mono text-emerald-400">Annual Return</span>
+              <label class="font-bold text-slate-700 uppercase tracking-wide">Estimasi Return per Tahun (%)</label>
+              <span class="text-[11px] font-mono text-emerald-600">Annual Return</span>
             </div>
             <input type="number" id="sim-rate" value="12" step="0.5" class="skeuo-input w-full px-3 py-2 text-xs font-mono font-bold">
             <input type="range" id="sim-rate-range" min="1" max="35" step="0.5" value="12" class="skeuo-slider mt-2">
@@ -473,14 +482,14 @@
           <!-- Parameter 4: Durasi (Tahun) -->
           <div class="space-y-1.5">
             <div class="flex justify-between items-center text-xs">
-              <label class="font-bold text-slate-300 uppercase tracking-wide">Durasi Investasi (Tahun)</label>
-              <span class="text-[11px] font-mono text-sky-400">Horizon</span>
+              <label class="font-bold text-slate-700 uppercase tracking-wide">Durasi Investasi (Tahun)</label>
+              <span class="text-[11px] font-mono text-sky-600">Horizon</span>
             </div>
             <input type="number" id="sim-years" value="10" min="1" max="30" class="skeuo-input w-full px-3 py-2 text-xs font-mono font-bold">
             <input type="range" id="sim-years-range" min="1" max="30" step="1" value="10" class="skeuo-slider mt-2">
           </div>
 
-          <button onclick="runSimulation()" class="skeuo-btn skeuo-btn-primary w-full py-3 rounded-xl text-xs uppercase tracking-wider font-bold shadow-[0_0_15px_rgba(2,132,199,0.4)]">
+          <button onclick="runSimulation()" class="skeuo-btn skeuo-btn-primary w-full py-3 rounded-xl text-xs uppercase tracking-wider font-bold">
             <i data-lucide="play" class="w-4 h-4 mr-2"></i> Hitung Proyeksi Aset
           </button>
         </div>
@@ -488,14 +497,14 @@
         <!-- Simulation Visualization & Projection Output -->
         <div class="skeuo-panel p-6 lg:col-span-2 flex flex-col justify-between space-y-4">
           <div>
-            <div class="flex items-center justify-between border-b border-slate-800/80 pb-3 mb-4">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
               <div class="flex items-center gap-2">
-                <div class="p-1.5 skeuo-sunken rounded text-sky-400">
+                <div class="p-1.5 skeuo-sunken rounded text-sky-600">
                   <i data-lucide="line-chart" class="w-4 h-4"></i>
                 </div>
-                <h4 class="font-bold text-sm text-slate-200 uppercase tracking-wider">Kurva Pertumbuhan Nilai Portfolio</h4>
+                <h4 class="font-bold text-sm text-slate-900 uppercase tracking-wider">Kurva Pertumbuhan Nilai Portofolio</h4>
               </div>
-              <span class="text-[10px] font-mono text-emerald-400 px-2 py-0.5 skeuo-sunken rounded">COMPOUND CURVE</span>
+              <span class="text-[10px] font-mono text-emerald-700 px-2 py-0.5 skeuo-sunken rounded">COMPOUND CURVE</span>
             </div>
 
             <div class="h-72">
@@ -503,7 +512,7 @@
             </div>
           </div>
 
-          <!-- LCD Summary Readouts -->
+          <!-- Summary Readouts -->
           <div id="sim-summary" class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
             <!-- Rendered by JS -->
           </div>
@@ -520,46 +529,46 @@
       
       <div class="max-w-4xl mx-auto space-y-6">
         
-        <!-- Hardware Telemetry Card -->
+        <!-- Storage Telemetry Card -->
         <div class="skeuo-panel p-6 relative overflow-hidden">
-          <div class="flex items-center justify-between border-b border-slate-800/80 pb-3 mb-5">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-5">
             <div class="flex items-center gap-2.5">
-              <div class="p-2 skeuo-sunken rounded-lg text-sky-400">
+              <div class="p-2 skeuo-sunken rounded-lg text-sky-600">
                 <i data-lucide="server" class="w-4 h-4"></i>
               </div>
               <div>
-                <h4 class="font-bold text-sm text-slate-100 uppercase tracking-wider">TELEMETRI DATA & PENYIMPANAN</h4>
-                <p class="text-[11px] text-slate-400 font-mono">Client-side Web Storage Status</p>
+                <h4 class="font-bold text-sm text-slate-900 uppercase tracking-wider">TELEMETRI DATA & PENYIMPANAN</h4>
+                <p class="text-[11px] text-slate-500 font-mono">Client-side Web Storage Status</p>
               </div>
             </div>
-            <div class="flex items-center gap-2 font-mono text-[11px] text-emerald-400">
+            <div class="flex items-center gap-2 font-mono text-[11px] text-emerald-600 font-bold">
               <span class="skeuo-led skeuo-led-green"></span> PERSISTENT OK
             </div>
           </div>
 
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
             <div class="skeuo-card-flat p-4">
-              <span class="text-[10px] font-bold text-slate-400 uppercase font-mono">Total Transaksi</span>
-              <p id="tel-tx-count" class="text-xl font-bold font-mono text-sky-300 mt-1">0</p>
+              <span class="text-[10px] font-bold text-slate-500 uppercase font-mono">Total Transaksi</span>
+              <p id="tel-tx-count" class="text-xl font-bold font-mono text-sky-700 mt-1">0</p>
             </div>
             <div class="skeuo-card-flat p-4">
-              <span class="text-[10px] font-bold text-slate-400 uppercase font-mono">Total Dompet</span>
-              <p id="tel-wallet-count" class="text-xl font-bold font-mono text-sky-300 mt-1">0</p>
+              <span class="text-[10px] font-bold text-slate-500 uppercase font-mono">Total Dompet</span>
+              <p id="tel-wallet-count" class="text-xl font-bold font-mono text-sky-700 mt-1">0</p>
             </div>
             <div class="skeuo-card-flat p-4">
-              <span class="text-[10px] font-bold text-slate-400 uppercase font-mono">Ukuran State</span>
-              <p id="tel-storage-size" class="text-xl font-bold font-mono text-emerald-400 mt-1">0 KB</p>
+              <span class="text-[10px] font-bold text-slate-500 uppercase font-mono">Ukuran State</span>
+              <p id="tel-storage-size" class="text-xl font-bold font-mono text-emerald-600 mt-1">0 KB</p>
             </div>
             <div class="skeuo-card-flat p-4">
-              <span class="text-[10px] font-bold text-slate-400 uppercase font-mono">Sinkronisasi Terakhir</span>
-              <p id="tel-last-sync" class="text-xs font-bold font-mono text-slate-200 mt-2 truncate">-</p>
+              <span class="text-[10px] font-bold text-slate-500 uppercase font-mono">Sinkronisasi Terakhir</span>
+              <p id="tel-last-sync" class="text-xs font-bold font-mono text-slate-700 mt-2 truncate">-</p>
             </div>
           </div>
         </div>
 
         <!-- Storage Operations List -->
         <div class="skeuo-panel p-6 space-y-4">
-          <h4 class="font-bold text-sm text-slate-200 uppercase tracking-wider border-b border-slate-800/80 pb-3">
+          <h4 class="font-bold text-sm text-slate-900 uppercase tracking-wider border-b border-slate-200 pb-3">
             OPERASI EKSPOR, IMPOR & PEMELIHARAAN
           </h4>
 
@@ -568,12 +577,12 @@
             <!-- Export JSON -->
             <div class="skeuo-card-flat p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div class="flex items-center gap-3">
-                <div class="p-2.5 skeuo-sunken rounded-xl text-sky-400">
+                <div class="p-2.5 skeuo-sunken rounded-xl text-sky-600">
                   <i data-lucide="file-json" class="w-5 h-5"></i>
                 </div>
                 <div>
-                  <h5 class="font-bold text-sm text-slate-100">Ekspor JSON Backup Penuh</h5>
-                  <p class="text-xs text-slate-400">Unduh seluruh snapshot state dompet, anggaran, & transaksi ke file JSON.</p>
+                  <h5 class="font-bold text-sm text-slate-900">Ekspor JSON Backup Penuh</h5>
+                  <p class="text-xs text-slate-500">Unduh seluruh snapshot state dompet, anggaran, & transaksi ke file JSON.</p>
                 </div>
               </div>
               <button onclick="exportJSON()" class="skeuo-btn skeuo-btn-primary px-4 py-2 text-xs uppercase tracking-wider font-bold rounded-lg shrink-0">
@@ -584,12 +593,12 @@
             <!-- Export CSV -->
             <div class="skeuo-card-flat p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div class="flex items-center gap-3">
-                <div class="p-2.5 skeuo-sunken rounded-xl text-emerald-400">
+                <div class="p-2.5 skeuo-sunken rounded-xl text-emerald-600">
                   <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
                 </div>
                 <div>
-                  <h5 class="font-bold text-sm text-slate-100">Ekspor Transaksi ke CSV</h5>
-                  <p class="text-xs text-slate-400">Unduh riwayat mutasi transaksi ke tabel spreadsheet (format .csv standard).</p>
+                  <h5 class="font-bold text-sm text-slate-900">Ekspor Transaksi ke CSV</h5>
+                  <p class="text-xs text-slate-500">Unduh riwayat mutasi transaksi ke tabel spreadsheet (format .csv standard).</p>
                 </div>
               </div>
               <button onclick="exportCSV()" class="skeuo-btn skeuo-btn-emerald px-4 py-2 text-xs uppercase tracking-wider font-bold rounded-lg shrink-0">
@@ -598,14 +607,14 @@
             </div>
 
             <!-- Import Bank CSV -->
-            <div class="skeuo-card-flat p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-sky-500/30">
+            <div class="skeuo-card-flat p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div class="flex items-center gap-3">
-                <div class="p-2.5 skeuo-sunken rounded-xl text-sky-400">
+                <div class="p-2.5 skeuo-sunken rounded-xl text-sky-600">
                   <i data-lucide="file-input" class="w-5 h-5"></i>
                 </div>
                 <div>
-                  <h5 class="font-bold text-sm text-slate-100">Impor Mutasi Bank dari CSV</h5>
-                  <p class="text-xs text-slate-400">Unggah file .csv mutasi rekening bank (Tanggal, Nominal, Catatan) untuk konversi ke transaksi.</p>
+                  <h5 class="font-bold text-sm text-slate-900">Impor Mutasi Bank dari CSV</h5>
+                  <p class="text-xs text-slate-500">Unggah file .csv mutasi rekening bank (Tanggal, Nominal, Catatan) untuk otomatisasi mutasi.</p>
                 </div>
               </div>
               <div>
@@ -618,14 +627,13 @@
 
             <!-- Import JSON -->
             <div class="skeuo-card-flat p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-
               <div class="flex items-center gap-3">
-                <div class="p-2.5 skeuo-sunken rounded-xl text-amber-400">
+                <div class="p-2.5 skeuo-sunken rounded-xl text-amber-600">
                   <i data-lucide="upload-cloud" class="w-5 h-5"></i>
                 </div>
                 <div>
-                  <h5 class="font-bold text-sm text-slate-100">Impor / Pulihkan Snapshot JSON</h5>
-                  <p class="text-xs text-slate-400">Unggah file backup JSON untuk menimpa & merekonstruksi data Cockpit.</p>
+                  <h5 class="font-bold text-sm text-slate-900">Impor / Pulihkan Snapshot JSON</h5>
+                  <p class="text-xs text-slate-500">Unggah file backup JSON untuk menimpa & merekonstruksi data Cockpit.</p>
                 </div>
               </div>
               <div>
@@ -637,14 +645,14 @@
             </div>
 
             <!-- Factory Reset Emergency Switch -->
-            <div class="skeuo-card-flat p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-rose-500/30">
+            <div class="skeuo-card-flat p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-rose-200">
               <div class="flex items-center gap-3">
-                <div class="p-2.5 skeuo-sunken rounded-xl text-rose-500">
+                <div class="p-2.5 skeuo-sunken rounded-xl text-rose-600">
                   <i data-lucide="alert-octagon" class="w-5 h-5"></i>
                 </div>
                 <div>
-                  <h5 class="font-bold text-sm text-rose-300">Reset Seluruh State (Factory Reset)</h5>
-                  <p class="text-xs text-slate-400">Hapus penyimpanan localStorage lokal dan pulihkan ke konfigurasi bawaan.</p>
+                  <h5 class="font-bold text-sm text-rose-700">Reset Seluruh State (Factory Reset)</h5>
+                  <p class="text-xs text-slate-500">Hapus penyimpanan localStorage lokal dan pulihkan ke konfigurasi bawaan.</p>
                 </div>
               </div>
               <button onclick="resetData()" class="skeuo-btn skeuo-btn-rose px-4 py-2 text-xs uppercase tracking-wider font-bold rounded-lg shrink-0">
@@ -662,9 +670,9 @@
   </main>
 
   <!-- ======================================================================
-       MODAL 1: TAMBAH TRANSAKSI BARU (SKEUOMORPHIC CHASSIS)
+       MODAL 1: TAMBAH TRANSAKSI BARU
        ====================================================================== -->
-  <div id="modal-transaction" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+  <div id="modal-transaction" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="skeuo-modal-box max-w-lg w-full p-6 space-y-4 relative">
       <div class="skeuo-rivet top-left"></div>
       <div class="skeuo-rivet top-right"></div>
@@ -672,28 +680,28 @@
       <div class="skeuo-rivet bottom-right"></div>
 
       <!-- Modal Header -->
-      <div class="flex justify-between items-center border-b border-slate-800/80 pb-3">
+      <div class="flex justify-between items-center border-b border-slate-200 pb-3">
         <div class="flex items-center gap-2">
           <div class="skeuo-led skeuo-led-cyan"></div>
           <h4 class="font-extrabold text-sm font-mono metallic-text uppercase tracking-wider">Catat Transaksi Baru</h4>
         </div>
-        <button onclick="toggleModal('modal-transaction', false)" class="text-slate-400 hover:text-white text-lg font-bold">&times;</button>
+        <button onclick="toggleModal('modal-transaction', false)" class="text-slate-400 hover:text-slate-700 text-lg font-bold">&times;</button>
       </div>
 
       <form id="form-transaction" onsubmit="handleTransactionSubmit(event)" class="space-y-4">
         
         <!-- Transaction Type Segmented Push Buttons -->
         <div>
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1.5">Pilih Tipe Transaksi</label>
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1.5">Pilih Tipe Transaksi</label>
           <input type="hidden" id="tx-type" value="expense">
           <div class="skeuo-sunken p-1 flex gap-1 rounded-xl">
             <button type="button" data-type="expense" onclick="setTxType('expense')" class="tx-type-selector-btn skeuo-btn skeuo-btn-rose flex-1 py-2 px-3 rounded-lg text-xs font-bold text-white">
               Pengeluaran
             </button>
-            <button type="button" data-type="income" onclick="setTxType('income')" class="tx-type-selector-btn skeuo-btn skeuo-btn-secondary flex-1 py-2 px-3 rounded-lg text-xs font-semibold text-slate-300">
+            <button type="button" data-type="income" onclick="setTxType('income')" class="tx-type-selector-btn skeuo-btn skeuo-btn-secondary flex-1 py-2 px-3 rounded-lg text-xs font-semibold text-slate-600">
               Pemasukan
             </button>
-            <button type="button" data-type="transfer" onclick="setTxType('transfer')" class="tx-type-selector-btn skeuo-btn skeuo-btn-secondary flex-1 py-2 px-3 rounded-lg text-xs font-semibold text-slate-300">
+            <button type="button" data-type="transfer" onclick="setTxType('transfer')" class="tx-type-selector-btn skeuo-btn skeuo-btn-secondary flex-1 py-2 px-3 rounded-lg text-xs font-semibold text-slate-600">
               Transfer
             </button>
           </div>
@@ -701,49 +709,49 @@
 
         <!-- Nominal -->
         <div>
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Nominal (Rp)</label>
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Nominal (Rp)</label>
           <div class="relative">
             <input type="number" id="tx-amount" required placeholder="0" min="1" class="skeuo-input w-full pl-9 pr-3 py-2 text-sm font-mono font-bold">
-            <span class="absolute left-3 top-2 text-xs font-mono font-bold text-sky-400">Rp</span>
+            <span class="absolute left-3 top-2 text-xs font-mono font-bold text-sky-600">Rp</span>
           </div>
         </div>
 
         <!-- Source Wallet -->
         <div id="field-wallet-src">
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Dompet / Rekening Asal</label>
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Dompet / Rekening Asal</label>
           <select id="tx-wallet" class="skeuo-select w-full px-3 py-2 text-xs"></select>
         </div>
 
         <!-- Target Wallet (Shown on Transfer) -->
         <div id="field-wallet-target" class="hidden">
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Dompet Tujuan</label>
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Dompet Tujuan</label>
           <select id="tx-target-wallet" class="skeuo-select w-full px-3 py-2 text-xs"></select>
         </div>
 
         <!-- Category (Hidden on Transfer) -->
         <div id="field-category">
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Kategori Transaksi</label>
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Kategori Transaksi</label>
           <select id="tx-category" class="skeuo-select w-full px-3 py-2 text-xs"></select>
         </div>
 
         <!-- Date & Notes Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Tanggal</label>
+            <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Tanggal</label>
             <input type="date" id="tx-date" required class="skeuo-input w-full px-3 py-2 text-xs">
           </div>
           <div>
-            <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Catatan</label>
+            <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Catatan</label>
             <input type="text" id="tx-notes" placeholder="Deskripsi ringkas..." class="skeuo-input w-full px-3 py-2 text-xs">
           </div>
         </div>
 
         <!-- Modal Actions -->
-        <div class="flex justify-end gap-2.5 pt-3 border-t border-slate-800/80">
+        <div class="flex justify-end gap-2.5 pt-3 border-t border-slate-200">
           <button type="button" onclick="toggleModal('modal-transaction', false)" class="skeuo-btn skeuo-btn-secondary px-4 py-2 rounded-xl text-xs uppercase tracking-wider font-semibold">
             Batal
           </button>
-          <button type="submit" class="skeuo-btn skeuo-btn-primary px-5 py-2 rounded-xl text-xs uppercase tracking-wider font-bold shadow-[0_0_15px_rgba(2,132,199,0.4)]">
+          <button type="submit" class="skeuo-btn skeuo-btn-primary px-5 py-2 rounded-xl text-xs uppercase tracking-wider font-bold">
             Simpan Transaksi
           </button>
         </div>
@@ -755,7 +763,7 @@
   <!-- ======================================================================
        MODAL 2: TAMBAH DOMPET BARU
        ====================================================================== -->
-  <div id="modal-wallet" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+  <div id="modal-wallet" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="skeuo-modal-box max-w-md w-full p-6 space-y-4 relative">
       <div class="skeuo-rivet top-left"></div>
       <div class="skeuo-rivet top-right"></div>
@@ -763,23 +771,23 @@
       <div class="skeuo-rivet bottom-right"></div>
 
       <!-- Modal Header -->
-      <div class="flex justify-between items-center border-b border-slate-800/80 pb-3">
+      <div class="flex justify-between items-center border-b border-slate-200 pb-3">
         <div class="flex items-center gap-2">
           <div class="skeuo-led skeuo-led-cyan"></div>
           <h4 class="font-extrabold text-sm font-mono metallic-text uppercase tracking-wider">Tambah Rekening / Dompet</h4>
         </div>
-        <button onclick="toggleModal('modal-wallet', false)" class="text-slate-400 hover:text-white text-lg font-bold">&times;</button>
+        <button onclick="toggleModal('modal-wallet', false)" class="text-slate-400 hover:text-slate-700 text-lg font-bold">&times;</button>
       </div>
 
       <form id="form-wallet" onsubmit="handleWalletSubmit(event)" class="space-y-4">
         
         <div>
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Nama Rekening / Dompet</label>
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Nama Rekening / Dompet</label>
           <input type="text" id="wallet-name" required placeholder="misal: Bank Mandiri / Kas Kecil" class="skeuo-input w-full px-3 py-2 text-xs">
         </div>
 
         <div>
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Tipe Instrumen</label>
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Tipe Instrumen</label>
           <select id="wallet-type" class="skeuo-select w-full px-3 py-2 text-xs">
             <option value="bank">Bank / Rekening Giro</option>
             <option value="cash">Uang Tunai Fisik (Cash)</option>
@@ -788,24 +796,24 @@
         </div>
 
         <div>
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Saldo Awal (Rp)</label>
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Saldo Awal (Rp)</label>
           <div class="relative">
             <input type="number" id="wallet-balance" required value="0" min="0" class="skeuo-input w-full pl-9 pr-3 py-2 text-sm font-mono font-bold">
-            <span class="absolute left-3 top-2 text-xs font-mono font-bold text-sky-400">Rp</span>
+            <span class="absolute left-3 top-2 text-xs font-mono font-bold text-sky-600">Rp</span>
           </div>
         </div>
 
         <div>
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Warna Aksen Indikator</label>
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Warna Aksen Kartu</label>
           <input type="color" id="wallet-color" value="#2563EB" class="skeuo-input w-full h-10 p-1 cursor-pointer">
         </div>
 
         <!-- Modal Actions -->
-        <div class="flex justify-end gap-2.5 pt-3 border-t border-slate-800/80">
+        <div class="flex justify-end gap-2.5 pt-3 border-t border-slate-200">
           <button type="button" onclick="toggleModal('modal-wallet', false)" class="skeuo-btn skeuo-btn-secondary px-4 py-2 rounded-xl text-xs uppercase tracking-wider font-semibold">
             Batal
           </button>
-          <button type="submit" class="skeuo-btn skeuo-btn-emerald px-5 py-2 rounded-xl text-xs uppercase tracking-wider font-bold shadow-[0_0_15px_rgba(16,185,129,0.4)]">
+          <button type="submit" class="skeuo-btn skeuo-btn-emerald px-5 py-2 rounded-xl text-xs uppercase tracking-wider font-bold">
             Simpan Dompet
           </button>
         </div>
@@ -815,30 +823,30 @@
   </div>
 
   <!-- MODAL 3: TAMBAH TARGET MENABUNG (GOAL) -->
-  <div id="modal-goal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+  <div id="modal-goal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="skeuo-modal-box max-w-md w-full p-6 space-y-4 relative">
-      <div class="flex justify-between items-center border-b border-slate-800/80 pb-3">
+      <div class="flex justify-between items-center border-b border-slate-200 pb-3">
         <h4 class="font-extrabold text-sm font-mono metallic-text uppercase">Tambah Target Menabung (Goal)</h4>
-        <button onclick="toggleModal('modal-goal', false)" class="text-slate-400 hover:text-white text-lg font-bold">&times;</button>
+        <button onclick="toggleModal('modal-goal', false)" class="text-slate-400 hover:text-slate-700 text-lg font-bold">&times;</button>
       </div>
       <form id="form-goal" onsubmit="handleGoalSubmit(event)" class="space-y-4">
         <div>
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Nama Target</label>
-          <input type="text" id="goal-name" required placeholder="misal: DP Rumah / Mobil" class="skeuo-input w-full px-3 py-2 text-xs">
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Nama Target</label>
+          <input type="text" id="goal-name" required placeholder="misal: DP Rumah / Dana Darurat" class="skeuo-input w-full px-3 py-2 text-xs">
         </div>
         <div>
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Target Nominal (Rp)</label>
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Target Nominal (Rp)</label>
           <input type="number" id="goal-target" required min="100000" class="skeuo-input w-full px-3 py-2 text-xs font-mono">
         </div>
         <div>
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Saldo Terkumpul Saat Ini (Rp)</label>
-          <input type="number" id="goal-current" value="0" class="skeuo-input w-full px-3 py-2 text-xs font-mono">
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Saldo Terkumpul Saat Ini (Rp)</label>
+          <input type="number" id="goal-current" value="0" min="0" class="skeuo-input w-full px-3 py-2 text-xs font-mono">
         </div>
         <div>
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Tenggat Waktu (Deadline)</label>
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Tenggat Waktu (Deadline)</label>
           <input type="date" id="goal-deadline" required class="skeuo-input w-full px-3 py-2 text-xs">
         </div>
-        <div class="flex justify-end gap-2.5 pt-3 border-t border-slate-800/80">
+        <div class="flex justify-end gap-2.5 pt-3 border-t border-slate-200">
           <button type="button" onclick="toggleModal('modal-goal', false)" class="skeuo-btn skeuo-btn-secondary px-4 py-2 text-xs">Batal</button>
           <button type="submit" class="skeuo-btn skeuo-btn-primary px-5 py-2 text-xs">Simpan Target</button>
         </div>
@@ -846,38 +854,63 @@
     </div>
   </div>
 
-  <!-- MODAL 4: TAMBAH TRANSAKSI RUTIN (RECURRING) -->
-  <div id="modal-recurring" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+  <!-- MODAL 4: SETOR DANA KE TARGET (DEPOSIT GOAL) -->
+  <div id="modal-goal-deposit" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="skeuo-modal-box max-w-md w-full p-6 space-y-4 relative">
-      <div class="flex justify-between items-center border-b border-slate-800/80 pb-3">
+      <div class="flex justify-between items-center border-b border-slate-200 pb-3">
+        <h4 class="font-extrabold text-sm font-mono metallic-text uppercase">Setor Tabungan Target</h4>
+        <button onclick="toggleModal('modal-goal-deposit', false)" class="text-slate-400 hover:text-slate-700 text-lg font-bold">&times;</button>
+      </div>
+      <form id="form-goal-deposit" onsubmit="handleGoalDepositSubmit(event)" class="space-y-4">
+        <input type="hidden" id="deposit-goal-id">
+        <div>
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Target Menabung</label>
+          <input type="text" id="deposit-goal-name" disabled class="skeuo-input w-full px-3 py-2 text-xs font-bold bg-slate-100">
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Jumlah Setoran (Rp)</label>
+          <input type="number" id="deposit-amount" required min="10000" placeholder="0" class="skeuo-input w-full px-3 py-2 text-xs font-mono font-bold">
+        </div>
+        <div class="flex justify-end gap-2.5 pt-3 border-t border-slate-200">
+          <button type="button" onclick="toggleModal('modal-goal-deposit', false)" class="skeuo-btn skeuo-btn-secondary px-4 py-2 text-xs">Batal</button>
+          <button type="submit" class="skeuo-btn skeuo-btn-emerald px-5 py-2 text-xs">Tambah Saldo Target</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 5: TAMBAH TRANSAKSI RUTIN (RECURRING) -->
+  <div id="modal-recurring" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="skeuo-modal-box max-w-md w-full p-6 space-y-4 relative">
+      <div class="flex justify-between items-center border-b border-slate-200 pb-3">
         <h4 class="font-extrabold text-sm font-mono metallic-text uppercase">Tambah Transaksi Rutin Berulang</h4>
-        <button onclick="toggleModal('modal-recurring', false)" class="text-slate-400 hover:text-white text-lg font-bold">&times;</button>
+        <button onclick="toggleModal('modal-recurring', false)" class="text-slate-400 hover:text-slate-700 text-lg font-bold">&times;</button>
       </div>
       <form id="form-recurring" onsubmit="handleRecurringSubmit(event)" class="space-y-4">
         <div>
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Nama Transaksi Rutin</label>
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Nama Transaksi Rutin</label>
           <input type="text" id="rec-name" required placeholder="misal: Langganan WiFi / Kos" class="skeuo-input w-full px-3 py-2 text-xs">
         </div>
         <div>
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Tipe</label>
-          <select id="rec-type" class="skeuo-select w-full px-3 py-2 text-xs">
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Tipe</label>
+          <select id="rec-type" onchange="populateRecurringCategories()" class="skeuo-select w-full px-3 py-2 text-xs">
             <option value="expense">Pengeluaran Rutin</option>
             <option value="income">Pemasukan Rutin</option>
           </select>
         </div>
         <div>
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Nominal (Rp)</label>
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Nominal (Rp)</label>
           <input type="number" id="rec-amount" required min="1" class="skeuo-input w-full px-3 py-2 text-xs font-mono">
         </div>
         <div>
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Dompet / Rekening</label>
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Dompet / Rekening</label>
           <select id="rec-wallet" class="skeuo-select w-full px-3 py-2 text-xs"></select>
         </div>
         <div>
-          <label class="block text-[11px] font-bold font-mono text-slate-300 uppercase mb-1">Kategori</label>
+          <label class="block text-[11px] font-bold font-mono text-slate-700 uppercase mb-1">Kategori</label>
           <select id="rec-category" class="skeuo-select w-full px-3 py-2 text-xs"></select>
         </div>
-        <div class="flex justify-end gap-2.5 pt-3 border-t border-slate-800/80">
+        <div class="flex justify-end gap-2.5 pt-3 border-t border-slate-200">
           <button type="button" onclick="toggleModal('modal-recurring', false)" class="skeuo-btn skeuo-btn-secondary px-4 py-2 text-xs">Batal</button>
           <button type="submit" class="skeuo-btn skeuo-btn-emerald px-5 py-2 text-xs">Simpan Otomatisasi</button>
         </div>
@@ -891,4 +924,3 @@
   <script src="assets/js/app.js"></script>
 </body>
 </html>
-

@@ -1,6 +1,6 @@
 /**
  * State Management & LocalStorage Synchronization
- * Personal Financial Cockpit
+ * Personal Financial Cockpit (Light Skeuomorphism Edition)
  */
 const STORAGE_KEY = "PERSONAL_FINANCIAL_COCKPIT_STATE";
 
@@ -8,7 +8,7 @@ const DEFAULT_STATE = {
   settings: {
     currency: "IDR",
     locale: "id-ID",
-    theme: "navy-skeuomorph",
+    theme: "light-skeuomorph",
     lastSync: new Date().toISOString(),
     stealthMode: false,
     securityPin: null // String e.g. "1234"
@@ -69,7 +69,7 @@ const DEFAULT_STATE = {
       targetAmount: 30000000,
       currentAmount: 12500000,
       deadline: "2026-12-31",
-      color: "#38BDF8"
+      color: "#0284C7"
     },
     {
       id: "g_2",
@@ -168,14 +168,16 @@ class StateManager {
     return JSON.parse(JSON.stringify(DEFAULT_STATE));
   }
 
-  saveState() {
+  saveState(skipNotify = false) {
     try {
       this.state.settings.lastSync = new Date().toISOString();
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
     } catch (e) {
       console.error("Gagal menyimpan state ke localStorage:", e);
     }
-    this.notify();
+    if (!skipNotify) {
+      this.notify();
+    }
   }
 
   subscribe(listener) {
@@ -219,14 +221,16 @@ class StateManager {
       txCount: this.state.transactions.length,
       walletCount: this.state.wallets.length,
       budgetCount: this.state.budgets.length,
+      goalCount: this.state.goals.length,
+      recurringCount: this.state.recurring.length,
       lastSync: this.state.settings.lastSync || new Date().toISOString()
     };
   }
 
   // ==================== TRANSACTIONS ====================
-  addTransaction(tx) {
-    tx.id = "tx_" + Date.now();
-    tx.amount = parseFloat(tx.amount);
+  addTransaction(tx, skipSave = false) {
+    if (!tx.id) tx.id = "tx_" + Date.now() + "_" + Math.random().toString(36).substring(2, 6);
+    tx.amount = parseFloat(tx.amount) || 0;
     this.state.transactions.unshift(tx);
 
     // Mutasi saldo dompet
@@ -243,7 +247,9 @@ class StateManager {
       if (target) target.balance += tx.amount;
     }
 
-    this.saveState();
+    if (!skipSave) {
+      this.saveState();
+    }
     return tx;
   }
 
@@ -251,7 +257,7 @@ class StateManager {
     const idx = this.state.transactions.findIndex((t) => t.id === id);
     if (idx !== -1) {
       const tx = this.state.transactions[idx];
-      const amount = parseFloat(tx.amount);
+      const amount = parseFloat(tx.amount) || 0;
 
       // Auto-rollback saldo dompet
       if (tx.type === "income") {
@@ -336,7 +342,7 @@ class StateManager {
   // ==================== RECURRING TRANSACTIONS ====================
   addRecurring(rec) {
     rec.id = "rec_" + Date.now();
-    rec.amount = parseFloat(rec.amount);
+    rec.amount = parseFloat(rec.amount) || 0;
     this.state.recurring.push(rec);
     this.saveState();
     return rec;
@@ -347,37 +353,53 @@ class StateManager {
     if (idx !== -1) {
       this.state.recurring.splice(idx, 1);
       this.saveState();
+      return true;
     }
+    return false;
   }
 
   processDueRecurring() {
     const today = new Date().toISOString().split("T")[0];
-    let count = 0;
+    let processedCount = 0;
+
     this.state.recurring.forEach((rec) => {
       if (rec.lastProcessed !== today) {
-        this.addTransaction({
+        const tx = {
+          id: "tx_rec_" + Date.now() + "_" + Math.random().toString(36).substring(2, 5),
           date: today,
           type: rec.type,
-          amount: rec.amount,
+          amount: parseFloat(rec.amount),
           walletId: rec.walletId,
           targetWalletId: null,
           categoryId: rec.categoryId,
           notes: `[Otomatis] ${rec.name}`,
           tags: ["rutin", "otomatis"]
-        });
+        };
+        this.state.transactions.unshift(tx);
+
+        const w = this.state.wallets.find((item) => item.id === rec.walletId);
+        if (w) {
+          if (rec.type === "income") w.balance += tx.amount;
+          else if (rec.type === "expense") w.balance -= tx.amount;
+        }
+
         rec.lastProcessed = today;
-        count++;
+        processedCount++;
       }
     });
-    if (count > 0) this.saveState();
-    return count;
+
+    if (processedCount > 0) {
+      this.saveState();
+    }
+    return processedCount;
   }
 
   // ==================== FINANCIAL GOALS ====================
   addGoal(goal) {
     goal.id = "g_" + Date.now();
-    goal.targetAmount = parseFloat(goal.targetAmount);
+    goal.targetAmount = parseFloat(goal.targetAmount) || 0;
     goal.currentAmount = parseFloat(goal.currentAmount) || 0;
+    if (!goal.color) goal.color = "#0284C7";
     this.state.goals.push(goal);
     this.saveState();
     return goal;
@@ -386,9 +408,11 @@ class StateManager {
   updateGoalDeposit(id, depositAmount) {
     const goal = this.state.goals.find((g) => g.id === id);
     if (goal) {
-      goal.currentAmount += parseFloat(depositAmount);
+      goal.currentAmount = Math.max(0, goal.currentAmount + parseFloat(depositAmount));
       this.saveState();
+      return true;
     }
+    return false;
   }
 
   deleteGoal(id) {
@@ -396,7 +420,9 @@ class StateManager {
     if (idx !== -1) {
       this.state.goals.splice(idx, 1);
       this.saveState();
+      return true;
     }
+    return false;
   }
 
   // ==================== STEALTH & SECURITY ====================
@@ -413,4 +439,3 @@ class StateManager {
 }
 
 const store = new StateManager();
-

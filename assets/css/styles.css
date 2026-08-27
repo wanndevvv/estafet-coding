@@ -1,75 +1,80 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
 
 /* ==========================================================================
-   SKEUOMORPHISM NAVY BLUE DESIGN SYSTEM & COCKPIT THEME
+   CLEAN LIGHT SKEUOMORPHISM DESIGN SYSTEM
+   Personal Financial Cockpit
    ========================================================================== */
 
 :root {
-  /* Navy Color Hierarchy */
-  --navy-abyss: #060a14;
-  --navy-darkest: #0a1122;
-  --navy-dark: #0e172e;
-  --navy-card: #14213d;
-  --navy-card-light: #1b2d53;
-  --navy-panel: #18284b;
-  --navy-border-light: rgba(255, 255, 255, 0.14);
-  --navy-border-highlight: rgba(147, 197, 253, 0.35);
-  --navy-border-dark: rgba(0, 0, 0, 0.65);
-  
-  /* Tactical Accent Colors */
-  --accent-cyan: #38bdf8;
-  --accent-blue: #2563eb;
-  --accent-emerald: #10b981;
-  --accent-emerald-glow: rgba(16, 185, 129, 0.35);
-  --accent-rose: #f43f5e;
-  --accent-rose-glow: rgba(244, 63, 94, 0.35);
-  --accent-amber: #f59e0b;
-  --accent-amber-glow: rgba(245, 158, 11, 0.35);
-  --accent-gold: #fbbf24;
+  /* Surface & Background Hierarchy (Clean Light Palette) */
+  --bg-canvas: #f1f5f9;
+  --bg-panel: #ffffff;
+  --bg-panel-subtle: #f8fafc;
+  --bg-sunken: #e2e8f0;
+  --bg-sunken-light: #edf2f7;
 
-  /* Skeuomorphic Shadow Presets */
+  /* Borders & Highlights */
+  --border-light-highlight: rgba(255, 255, 255, 0.95);
+  --border-subtle: rgba(203, 213, 225, 0.7);
+  --border-strong: rgba(148, 163, 184, 0.5);
+
+  /* Typography Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+
+  /* Tactical Functional Colors */
+  --accent-primary: #0284c7;
+  --accent-primary-hover: #0369a1;
+  --accent-emerald: #10b981;
+  --accent-emerald-dark: #059669;
+  --accent-rose: #f43f5e;
+  --accent-rose-dark: #e11d48;
+  --accent-amber: #f59e0b;
+  --accent-amber-dark: #d97706;
+
+  /* Clean Light Skeuomorphic Shadows */
   --shadow-raised-lg: 
-    0 16px 36px -4px rgba(0, 0, 0, 0.75), 
-    0 6px 14px -2px rgba(0, 0, 0, 0.5), 
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.22), 
-    inset 0 -2px 3px 0 rgba(0, 0, 0, 0.7);
+    0 12px 28px -4px rgba(15, 23, 42, 0.08), 
+    0 4px 10px -2px rgba(15, 23, 42, 0.04), 
+    inset 0 1px 0 rgba(255, 255, 255, 1.0), 
+    inset 0 -1px 0 rgba(203, 213, 225, 0.5);
 
   --shadow-raised-md: 
-    0 8px 20px -3px rgba(0, 0, 0, 0.65), 
-    0 3px 6px -1px rgba(0, 0, 0, 0.45), 
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.2), 
-    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6);
+    0 6px 16px -2px rgba(15, 23, 42, 0.06), 
+    0 2px 4px -1px rgba(15, 23, 42, 0.03), 
+    inset 0 1px 0 rgba(255, 255, 255, 1.0), 
+    inset 0 -1px 0 rgba(203, 213, 225, 0.4);
 
   --shadow-sunken: 
-    inset 0 3px 8px 1px rgba(0, 0, 0, 0.8), 
-    inset 0 1px 3px 0 rgba(0, 0, 0, 0.6), 
-    0 1px 1px 0 rgba(255, 255, 255, 0.08);
+    inset 0 2px 5px rgba(15, 23, 42, 0.08), 
+    inset 0 1px 2px rgba(15, 23, 42, 0.05), 
+    0 1px 0 rgba(255, 255, 255, 0.9);
 
   --shadow-sunken-sm: 
-    inset 0 2px 4px 0 rgba(0, 0, 0, 0.75), 
-    0 1px 1px 0 rgba(255, 255, 255, 0.06);
+    inset 0 1px 3px rgba(15, 23, 42, 0.06), 
+    0 1px 0 rgba(255, 255, 255, 0.8);
 
   --shadow-btn: 
-    0 4px 8px 0 rgba(0, 0, 0, 0.6), 
-    0 1px 3px 0 rgba(0, 0, 0, 0.4), 
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.35), 
-    inset 0 -2px 3px 0 rgba(0, 0, 0, 0.6);
+    0 3px 6px -1px rgba(15, 23, 42, 0.1), 
+    0 1px 2px 0 rgba(15, 23, 42, 0.06), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.6), 
+    inset 0 -1px 1px rgba(0, 0, 0, 0.1);
 
   --shadow-btn-pressed: 
-    inset 0 4px 8px 0 rgba(0, 0, 0, 0.85), 
-    inset 0 1px 3px 0 rgba(0, 0, 0, 0.9), 
-    0 1px 1px 0 rgba(255, 255, 255, 0.08);
+    inset 0 3px 6px rgba(15, 23, 42, 0.18), 
+    0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
-/* Base App Setup */
+/* Base Body & Layout */
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  background-color: var(--navy-abyss);
+  background-color: var(--bg-canvas);
   background-image: 
-    radial-gradient(circle at 50% 0%, #172a54 0%, #0c162b 45%, #060a14 100%),
-    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.15) 2px, rgba(0, 0, 0, 0.15) 4px);
+    radial-gradient(circle at 50% -10%, #ffffff 0%, #f1f5f9 65%, #e2e8f0 100%);
   background-attachment: fixed;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   min-height: 100vh;
 }
 
@@ -77,100 +82,94 @@ body {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Custom Scrollbar for Navy Cockpit */
+/* Custom Clean Scrollbar */
 ::-webkit-scrollbar {
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #080d1a;
-  box-shadow: inset 0 0 6px rgba(0,0,0,0.8);
+  background: #f1f5f9;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #223869 0%, #152445 100%);
-  border-radius: 5px;
-  border: 1px solid rgba(255,255,255,0.15);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  background: #cbd5e1;
+  border-radius: 4px;
+  border: 2px solid #f1f5f9;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #2d4a8a 0%, #1c305c 100%);
+  background: #94a3b8;
 }
 
 /* ==========================================================================
-   SKEUOMORPHIC PANELS & CARDS
+   SKEUOMORPHIC PANELS & CARDS (LIGHT MODE)
    ========================================================================== */
 
 .skeuo-panel {
-  background: linear-gradient(145deg, #18284c 0%, #111d38 100%);
-  border-top: 1px solid var(--navy-border-light);
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
-  border-right: 1px solid var(--navy-border-dark);
-  border-bottom: 1px solid var(--navy-border-dark);
+  background: linear-gradient(165deg, #ffffff 0%, #fafbfc 60%, #f1f5f9 100%);
+  border: 1px solid var(--border-subtle);
+  border-top: 1px solid var(--border-light-highlight);
   border-radius: 18px;
   box-shadow: var(--shadow-raised-lg);
   position: relative;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .skeuo-panel-interactive:hover {
   transform: translateY(-2px);
   box-shadow: 
-    0 20px 40px -4px rgba(0, 0, 0, 0.85), 
-    0 8px 16px -2px rgba(0, 0, 0, 0.6), 
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.28), 
-    inset 0 -2px 3px 0 rgba(0, 0, 0, 0.7);
+    0 16px 32px -4px rgba(15, 23, 42, 0.1), 
+    0 6px 12px -2px rgba(15, 23, 42, 0.05), 
+    inset 0 1px 0 rgba(255, 255, 255, 1.0);
 }
 
 .skeuo-card-flat {
-  background: linear-gradient(160deg, #142242 0%, #0e172e 100%);
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  border-left: 1px solid rgba(255, 255, 255, 0.06);
-  border-right: 1px solid rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  border-top: 1px solid #ffffff;
   border-radius: 14px;
   box-shadow: var(--shadow-raised-md);
 }
 
 /* Sunken / Inset Well */
 .skeuo-sunken {
-  background: linear-gradient(180deg, #090e1c 0%, #0d152a 100%);
-  border-top: 1px solid rgba(0, 0, 0, 0.9);
-  border-left: 1px solid rgba(0, 0, 0, 0.7);
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  background: linear-gradient(180deg, #e2e8f0 0%, #edf2f7 60%, #f1f5f9 100%);
+  border-top: 1px solid rgba(148, 163, 184, 0.45);
+  border-left: 1px solid rgba(148, 163, 184, 0.3);
+  border-right: 1px solid rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 1.0);
   box-shadow: var(--shadow-sunken);
   border-radius: 12px;
 }
 
 .skeuo-sunken-tight {
-  background: linear-gradient(180deg, #070c17 0%, #0b1224 100%);
-  border-top: 1px solid rgba(0, 0, 0, 0.85);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(180deg, #e6ecf2 0%, #f1f5f9 100%);
+  border-top: 1px solid rgba(148, 163, 184, 0.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: var(--shadow-sunken-sm);
   border-radius: 8px;
 }
 
-/* Metallic Corner Rivets for Authentic Cockpit Style */
+/* Polished Chrome Rivets */
 .skeuo-rivet {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #94a3b8 0%, #475569 60%, #1e293b 100%);
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #cbd5e1 55%, #94a3b8 100%);
   box-shadow: 
-    0 1px 2px rgba(0,0,0,0.8), 
-    inset 0 1px 1px rgba(255,255,255,0.6), 
-    inset 0 -1px 1px rgba(0,0,0,0.9);
+    0 1px 2px rgba(15, 23, 42, 0.25), 
+    inset 0 1px 1px rgba(255, 255, 255, 0.9), 
+    inset 0 -1px 1px rgba(100, 116, 139, 0.5);
   position: absolute;
   pointer-events: none;
   z-index: 10;
 }
-.skeuo-rivet.top-left { top: 8px; left: 8px; }
-.skeuo-rivet.top-right { top: 8px; right: 8px; }
-.skeuo-rivet.bottom-left { bottom: 8px; left: 8px; }
-.skeuo-rivet.bottom-right { bottom: 8px; right: 8px; }
+.skeuo-rivet.top-left { top: 10px; left: 10px; }
+.skeuo-rivet.top-right { top: 10px; right: 10px; }
+.skeuo-rivet.bottom-left { bottom: 10px; left: 10px; }
+.skeuo-rivet.bottom-right { bottom: 10px; right: 10px; }
 
 /* ==========================================================================
-   SKEUOMORPHIC BUTTONS & INTERACTIVE CONTROLS
+   SKEUOMORPHIC 3D BUTTONS
    ========================================================================== */
 
 .skeuo-btn {
@@ -183,124 +182,123 @@ body {
   border-radius: 10px;
   position: relative;
   transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .skeuo-btn:active {
   transform: translateY(2px);
 }
 
-/* Default / Secondary Navy Button */
+/* Secondary / Standard Tactile White Button */
 .skeuo-btn-secondary {
-  background: linear-gradient(180deg, #243864 0%, #172648 100%);
-  border-top: 1px solid rgba(255, 255, 255, 0.25);
-  border-left: 1px solid rgba(255, 255, 255, 0.12);
-  border-right: 1px solid rgba(0, 0, 0, 0.6);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 55%, #f1f5f9 100%);
+  border: 1px solid #cbd5e1;
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #94a3b8;
   box-shadow: var(--shadow-btn);
-  color: #f1f5f9;
+  color: var(--text-secondary);
 }
 .skeuo-btn-secondary:hover {
-  background: linear-gradient(180deg, #2c4479 0%, #1c2e55 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  color: var(--text-primary);
   box-shadow: 
-    0 5px 12px rgba(0, 0, 0, 0.65), 
-    inset 0 1px 1px rgba(255, 255, 255, 0.35), 
-    inset 0 -2px 3px rgba(0, 0, 0, 0.6);
+    0 4px 8px -1px rgba(15, 23, 42, 0.12), 
+    inset 0 1px 0 #ffffff;
 }
 .skeuo-btn-secondary:active {
-  background: linear-gradient(180deg, #131f3b 0%, #1b2a4f 100%);
+  background: linear-gradient(180deg, #e2e8f0 0%, #edf2f7 100%);
   box-shadow: var(--shadow-btn-pressed);
 }
 
-/* Primary Cyan/Blue Push Button */
+/* Primary Vibrant Blue Button */
 .skeuo-btn-primary {
-  background: linear-gradient(180deg, #0284c7 0%, #0369a1 50%, #075985 100%);
+  background: linear-gradient(180deg, #0284c7 0%, #0369a1 60%, #075985 100%);
+  border: 1px solid #0369a1;
   border-top: 1px solid rgba(255, 255, 255, 0.45);
-  border-left: 1px solid rgba(255, 255, 255, 0.25);
-  border-right: 1px solid rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+  border-bottom: 1px solid #0c4a6e;
   box-shadow: 
-    0 4px 10px rgba(2, 132, 199, 0.4), 
-    0 2px 4px rgba(0, 0, 0, 0.6), 
-    inset 0 1px 1px rgba(255, 255, 255, 0.5), 
-    inset 0 -2px 3px rgba(0, 0, 0, 0.5);
+    0 4px 10px rgba(2, 132, 199, 0.3), 
+    0 1px 2px rgba(15, 23, 42, 0.1), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.45), 
+    inset 0 -1px 1px rgba(0, 0, 0, 0.2);
   color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 .skeuo-btn-primary:hover {
-  background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%);
+  background: linear-gradient(180deg, #38bdf8 0%, #0284c7 60%, #0369a1 100%);
   box-shadow: 
-    0 6px 16px rgba(14, 165, 233, 0.5), 
-    0 2px 4px rgba(0, 0, 0, 0.6), 
-    inset 0 1px 1px rgba(255, 255, 255, 0.6), 
-    inset 0 -2px 3px rgba(0, 0, 0, 0.5);
+    0 6px 14px rgba(2, 132, 199, 0.4), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 .skeuo-btn-primary:active {
   background: linear-gradient(180deg, #0369a1 0%, #075985 100%);
   box-shadow: 
-    inset 0 4px 8px rgba(0, 0, 0, 0.8), 
-    inset 0 1px 2px rgba(0, 0, 0, 0.9), 
-    0 1px 2px rgba(14, 165, 233, 0.2);
+    inset 0 3px 6px rgba(0, 0, 0, 0.4), 
+    0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 /* Emerald Green Tactical Button */
 .skeuo-btn-emerald {
-  background: linear-gradient(180deg, #10b981 0%, #059669 50%, #047857 100%);
+  background: linear-gradient(180deg, #10b981 0%, #059669 60%, #047857 100%);
+  border: 1px solid #059669;
   border-top: 1px solid rgba(255, 255, 255, 0.45);
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
-  border-right: 1px solid rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+  border-bottom: 1px solid #064e3b;
   box-shadow: 
-    0 4px 10px rgba(16, 185, 129, 0.35), 
-    0 2px 4px rgba(0, 0, 0, 0.6), 
-    inset 0 1px 1px rgba(255, 255, 255, 0.5), 
-    inset 0 -2px 3px rgba(0, 0, 0, 0.5);
+    0 4px 10px rgba(16, 185, 129, 0.28), 
+    0 1px 2px rgba(15, 23, 42, 0.1), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.45), 
+    inset 0 -1px 1px rgba(0, 0, 0, 0.2);
   color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 .skeuo-btn-emerald:hover {
-  background: linear-gradient(180deg, #34d399 0%, #10b981 50%, #059669 100%);
+  background: linear-gradient(180deg, #34d399 0%, #10b981 60%, #059669 100%);
   box-shadow: 
-    0 6px 16px rgba(16, 185, 129, 0.5), 
-    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    0 6px 14px rgba(16, 185, 129, 0.38), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 .skeuo-btn-emerald:active {
   background: linear-gradient(180deg, #059669 0%, #047857 100%);
-  box-shadow: var(--shadow-btn-pressed);
+  box-shadow: 
+    inset 0 3px 6px rgba(0, 0, 0, 0.4), 
+    0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 /* Rose / Crimson Tactical Danger Button */
 .skeuo-btn-rose {
-  background: linear-gradient(180deg, #e11d48 0%, #be123c 50%, #9f1239 100%);
-  border-top: 1px solid rgba(255, 255, 255, 0.4);
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
-  border-right: 1px solid rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+  background: linear-gradient(180deg, #f43f5e 0%, #e11d48 60%, #be123c 100%);
+  border: 1px solid #e11d48;
+  border-top: 1px solid rgba(255, 255, 255, 0.45);
+  border-bottom: 1px solid #881337;
   box-shadow: 
-    0 4px 10px rgba(225, 29, 72, 0.35), 
-    0 2px 4px rgba(0, 0, 0, 0.6), 
-    inset 0 1px 1px rgba(255, 255, 255, 0.45), 
-    inset 0 -2px 3px rgba(0, 0, 0, 0.5);
+    0 4px 10px rgba(244, 63, 94, 0.28), 
+    0 1px 2px rgba(15, 23, 42, 0.1), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.45), 
+    inset 0 -1px 1px rgba(0, 0, 0, 0.2);
   color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 .skeuo-btn-rose:hover {
-  background: linear-gradient(180deg, #f43f5e 0%, #e11d48 50%, #be123c 100%);
+  background: linear-gradient(180deg, #fb7185 0%, #f43f5e 60%, #e11d48 100%);
   box-shadow: 
-    0 6px 16px rgba(244, 63, 94, 0.5), 
-    inset 0 1px 1px rgba(255, 255, 255, 0.55);
+    0 6px 14px rgba(244, 63, 94, 0.38), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 .skeuo-btn-rose:active {
-  background: linear-gradient(180deg, #be123c 0%, #881337 100%);
-  box-shadow: var(--shadow-btn-pressed);
+  background: linear-gradient(180deg, #be123c 0%, #9f1239 100%);
+  box-shadow: 
+    inset 0 3px 6px rgba(0, 0, 0, 0.4), 
+    0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
-/* Tactical Amber / Gold Button */
+/* Tactical Amber Button */
 .skeuo-btn-amber {
-  background: linear-gradient(180deg, #d97706 0%, #b45309 50%, #92400e 100%);
-  border-top: 1px solid rgba(255, 255, 255, 0.4);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+  background: linear-gradient(180deg, #f59e0b 0%, #d97706 60%, #b45309 100%);
+  border: 1px solid #d97706;
+  border-top: 1px solid rgba(255, 255, 255, 0.45);
+  border-bottom: 1px solid #78350f;
   box-shadow: 
-    0 4px 10px rgba(217, 119, 6, 0.35), 
-    inset 0 1px 1px rgba(255, 255, 255, 0.45), 
-    inset 0 -2px 3px rgba(0, 0, 0, 0.5);
+    0 4px 10px rgba(245, 158, 11, 0.28), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
   color: #ffffff;
 }
 
@@ -309,22 +307,22 @@ body {
    ========================================================================== */
 
 .skeuo-navbar {
-  background: linear-gradient(180deg, #18284c 0%, #101a33 100%);
-  border-bottom: 1px solid var(--navy-border-light);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border-bottom: 1px solid rgba(203, 213, 225, 0.8);
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04), inset 0 -1px 0 rgba(226, 232, 240, 0.8);
 }
 
 .skeuo-nav-track {
-  background: linear-gradient(180deg, #080d19 0%, #0c1426 100%);
-  border-top: 1px solid rgba(0, 0, 0, 0.85);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.8);
+  background: linear-gradient(180deg, #e2e8f0 0%, #edf2f7 100%);
+  border-top: 1px solid rgba(148, 163, 184, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.07);
   border-radius: 12px;
   padding: 4px;
 }
 
 .skeuo-nav-btn {
-  color: #94a3b8;
+  color: var(--text-muted);
   border-radius: 8px;
   font-weight: 600;
   transition: all 0.15s ease;
@@ -332,21 +330,19 @@ body {
 }
 
 .skeuo-nav-btn:hover {
-  color: #f1f5f9;
-  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .skeuo-nav-btn.active {
-  color: #ffffff;
-  background: linear-gradient(180deg, #2b457c 0%, #1a2b52 100%);
-  border-top: 1px solid rgba(255, 255, 255, 0.35);
-  border-left: 1px solid rgba(255, 255, 255, 0.15);
-  border-right: 1px solid rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+  color: #0284c7;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid #cbd5e1;
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #94a3b8;
   box-shadow: 
-    0 4px 10px rgba(0, 0, 0, 0.6), 
-    inset 0 1px 1px rgba(255, 255, 255, 0.35), 
-    inset 0 -1px 2px rgba(0, 0, 0, 0.5);
+    0 2px 6px rgba(15, 23, 42, 0.08), 
+    inset 0 1px 0 #ffffff;
 }
 
 .skeuo-nav-btn.active::after {
@@ -355,11 +351,11 @@ body {
   bottom: -3px;
   left: 50%;
   transform: translateX(-50%);
-  width: 24px;
+  width: 20px;
   height: 3px;
   border-radius: 2px;
-  background: #38bdf8;
-  box-shadow: 0 0 8px #38bdf8;
+  background: #0284c7;
+  box-shadow: 0 0 6px rgba(2, 132, 199, 0.5);
 }
 
 /* ==========================================================================
@@ -367,42 +363,41 @@ body {
    ========================================================================== */
 
 .skeuo-input, .skeuo-select {
-  background: linear-gradient(180deg, #090e1b 0%, #0e172a 100%);
-  border-top: 1px solid rgba(0, 0, 0, 0.9);
-  border-left: 1px solid rgba(0, 0, 0, 0.75);
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: var(--shadow-sunken);
-  color: #f8fafc;
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+  border: 1px solid #cbd5e1;
+  border-top: 1px solid #94a3b8;
+  box-shadow: var(--shadow-sunken-sm);
+  color: var(--text-primary);
   border-radius: 10px;
   transition: all 0.2s ease;
 }
 
 .skeuo-input:focus, .skeuo-select:focus {
   outline: none;
-  border-color: #38bdf8;
+  border-color: #0284c7;
+  background: #ffffff;
   box-shadow: 
-    inset 0 2px 6px rgba(0, 0, 0, 0.9), 
-    0 0 0 2px rgba(56, 189, 248, 0.35), 
-    0 0 12px rgba(56, 189, 248, 0.2);
+    inset 0 1px 2px rgba(15, 23, 42, 0.06), 
+    0 0 0 3px rgba(2, 132, 199, 0.15), 
+    0 0 8px rgba(2, 132, 199, 0.1);
 }
 
 .skeuo-select option {
-  background-color: #0e172a;
-  color: #e2e8f0;
+  background-color: #ffffff;
+  color: var(--text-primary);
 }
 
-/* Skeuomorphic Range Slider */
+/* Range Slider */
 .skeuo-slider {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
   height: 8px;
   border-radius: 4px;
-  background: linear-gradient(180deg, #070c17 0%, #0d1527 100%);
-  border-top: 1px solid rgba(0,0,0,0.9);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+  background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
+  border-top: 1px solid rgba(100, 116, 139, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.1);
   outline: none;
 }
 
@@ -412,22 +407,22 @@ body {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #38bdf8 0%, #0284c7 60%, #075985 100%);
-  border-top: 1px solid rgba(255, 255, 255, 0.6);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+  background: radial-gradient(circle at 35% 35%, #38bdf8 0%, #0284c7 65%, #0369a1 100%);
+  border: 1px solid #0369a1;
+  border-top: 1px solid rgba(255, 255, 255, 0.7);
   box-shadow: 
-    0 3px 6px rgba(0, 0, 0, 0.7), 
-    0 0 8px rgba(56, 189, 248, 0.5), 
-    inset 0 1px 2px rgba(255, 255, 255, 0.7);
+    0 3px 6px rgba(15, 23, 42, 0.2), 
+    0 0 8px rgba(2, 132, 199, 0.3), 
+    inset 0 1px 1px rgba(255, 255, 255, 0.8);
   cursor: pointer;
   transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 .skeuo-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.1);
+  transform: scale(1.12);
   box-shadow: 
-    0 4px 10px rgba(0, 0, 0, 0.8), 
-    0 0 14px rgba(56, 189, 248, 0.8), 
+    0 4px 10px rgba(15, 23, 42, 0.25), 
+    0 0 12px rgba(2, 132, 199, 0.5), 
     inset 0 1px 2px rgba(255, 255, 255, 0.9);
 }
 
@@ -436,7 +431,7 @@ body {
 }
 
 /* ==========================================================================
-   AUTHENTIC PHYSICAL CREDIT / WALLET CARD DESIGN
+   AUTHENTIC PHYSICAL WALLET CARDS (CLEAN LIGHT SKEUOMORPHISM)
    ========================================================================== */
 
 .skeuo-card-credit {
@@ -444,20 +439,20 @@ body {
   position: relative;
   overflow: hidden;
   box-shadow: 
-    0 14px 28px -4px rgba(0, 0, 0, 0.85), 
-    0 6px 12px -2px rgba(0, 0, 0, 0.65), 
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.35), 
-    inset 0 -2px 4px 0 rgba(0, 0, 0, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    0 10px 24px -4px rgba(15, 23, 42, 0.18), 
+    0 4px 8px -2px rgba(15, 23, 42, 0.1), 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.4), 
+    inset 0 -2px 4px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .skeuo-card-credit:hover {
-  transform: translateY(-4px) scale(1.01);
+  transform: translateY(-3px) scale(1.01);
   box-shadow: 
-    0 22px 38px -4px rgba(0, 0, 0, 0.9), 
-    0 10px 18px -2px rgba(0, 0, 0, 0.7), 
-    inset 0 1px 2px 0 rgba(255, 255, 255, 0.45);
+    0 16px 32px -4px rgba(15, 23, 42, 0.22), 
+    0 6px 12px -2px rgba(15, 23, 42, 0.12), 
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.5);
 }
 
 /* Card Gloss / Hologram Sheen */
@@ -470,26 +465,26 @@ body {
   height: 200%;
   background: linear-gradient(
     135deg, 
-    rgba(255, 255, 255, 0.18) 0%, 
-    rgba(255, 255, 255, 0.05) 30%, 
+    rgba(255, 255, 255, 0.25) 0%, 
+    rgba(255, 255, 255, 0.08) 25%, 
     transparent 50%, 
-    rgba(255, 255, 255, 0.08) 70%, 
+    rgba(255, 255, 255, 0.12) 75%, 
     transparent 100%
   );
   pointer-events: none;
 }
 
-/* Realistic Gold / Silver Microchip */
+/* Realistic Gold Microchip */
 .skeuo-chip {
-  width: 42px;
-  height: 32px;
-  border-radius: 6px;
-  background: linear-gradient(135deg, #fcd34d 0%, #d97706 50%, #fef3c7 75%, #b45309 100%);
-  border: 1px solid #78350f;
+  width: 38px;
+  height: 28px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #fde68a 0%, #d97706 50%, #fef3c7 75%, #b45309 100%);
+  border: 1px solid #92400e;
   box-shadow: 
-    0 2px 4px rgba(0, 0, 0, 0.5), 
-    inset 0 1px 1px rgba(255, 255, 255, 0.6), 
-    inset 0 -1px 2px rgba(0, 0, 0, 0.5);
+    0 2px 4px rgba(0, 0, 0, 0.25), 
+    inset 0 1px 1px rgba(255, 255, 255, 0.7), 
+    inset 0 -1px 1px rgba(0, 0, 0, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -497,9 +492,9 @@ body {
 .skeuo-chip::before {
   content: '';
   position: absolute;
-  inset: 5px;
-  border: 1px solid rgba(120, 53, 15, 0.6);
-  border-radius: 3px;
+  inset: 4px;
+  border: 1px solid rgba(146, 64, 14, 0.6);
+  border-radius: 2px;
 }
 
 .skeuo-chip::after {
@@ -509,7 +504,7 @@ body {
   left: 0;
   right: 0;
   height: 1px;
-  background: rgba(120, 53, 15, 0.7);
+  background: rgba(146, 64, 14, 0.7);
 }
 
 /* Embossed Text Effect for Card Data */
@@ -517,10 +512,9 @@ body {
   color: #ffffff;
   text-shadow: 
     0 1px 1px rgba(255, 255, 255, 0.5), 
-    0 -1px 1px rgba(0, 0, 0, 0.8), 
-    1px 0 1px rgba(0, 0, 0, 0.5), 
-    -1px 0 1px rgba(255, 255, 255, 0.3);
-  letter-spacing: 0.05em;
+    0 -1px 1px rgba(0, 0, 0, 0.6), 
+    1px 0 1px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.04em;
 }
 
 /* ==========================================================================
@@ -528,43 +522,44 @@ body {
    ========================================================================== */
 
 .skeuo-led {
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   display: inline-block;
   position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .skeuo-led-green {
   background: radial-gradient(circle at 35% 35%, #6ee7b7 0%, #10b981 60%, #047857 100%);
   box-shadow: 
-    0 0 8px 2px rgba(16, 185, 129, 0.65), 
-    0 1px 2px rgba(0,0,0,0.8), 
-    inset 0 1px 1px rgba(255,255,255,0.8);
+    0 0 6px 1px rgba(16, 185, 129, 0.6), 
+    0 1px 2px rgba(15, 23, 42, 0.2), 
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
 }
 
 .skeuo-led-red {
   background: radial-gradient(circle at 35% 35%, #fda4af 0%, #f43f5e 60%, #9f1239 100%);
   box-shadow: 
-    0 0 8px 2px rgba(244, 63, 94, 0.65), 
-    0 1px 2px rgba(0,0,0,0.8), 
-    inset 0 1px 1px rgba(255,255,255,0.8);
+    0 0 6px 1px rgba(244, 63, 94, 0.6), 
+    0 1px 2px rgba(15, 23, 42, 0.2), 
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
 }
 
 .skeuo-led-cyan {
-  background: radial-gradient(circle at 35% 35%, #bae6fd 0%, #38bdf8 60%, #0369a1 100%);
+  background: radial-gradient(circle at 35% 35%, #bae6fd 0%, #0284c7 60%, #0369a1 100%);
   box-shadow: 
-    0 0 8px 2px rgba(56, 189, 248, 0.65), 
-    0 1px 2px rgba(0,0,0,0.8), 
-    inset 0 1px 1px rgba(255,255,255,0.8);
+    0 0 6px 1px rgba(2, 132, 199, 0.6), 
+    0 1px 2px rgba(15, 23, 42, 0.2), 
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
 }
 
 .skeuo-led-amber {
   background: radial-gradient(circle at 35% 35%, #fde68a 0%, #f59e0b 60%, #92400e 100%);
   box-shadow: 
-    0 0 8px 2px rgba(245, 158, 11, 0.65), 
-    0 1px 2px rgba(0,0,0,0.8), 
-    inset 0 1px 1px rgba(255,255,255,0.8);
+    0 0 6px 1px rgba(245, 158, 11, 0.6), 
+    0 1px 2px rgba(15, 23, 42, 0.2), 
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
 }
 
 /* ==========================================================================
@@ -572,10 +567,10 @@ body {
    ========================================================================== */
 
 .skeuo-meter-track {
-  background: linear-gradient(180deg, #070c17 0%, #0e162a 100%);
-  border-top: 1px solid rgba(0, 0, 0, 0.9);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.85);
+  background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
+  border-top: 1px solid rgba(100, 116, 139, 0.45);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.1);
   border-radius: 9999px;
   overflow: hidden;
   padding: 2px;
@@ -586,9 +581,9 @@ body {
   border-radius: 9999px;
   position: relative;
   box-shadow: 
-    0 1px 2px rgba(0, 0, 0, 0.5), 
-    inset 0 1px 1px rgba(255, 255, 255, 0.45), 
-    inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+    0 1px 2px rgba(15, 23, 42, 0.15), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.5), 
+    inset 0 -1px 1px rgba(0, 0, 0, 0.15);
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -599,7 +594,7 @@ body {
   left: 0;
   right: 0;
   height: 40%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, transparent 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, transparent 100%);
   border-radius: 9999px 9999px 0 0;
 }
 
@@ -613,31 +608,30 @@ body {
   gap: 4px;
   padding: 3px 8px;
   border-radius: 6px;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .skeuo-badge-income {
-  background: linear-gradient(180deg, #059669 0%, #064e3b 100%);
-  color: #a7f3d0;
-  border-color: rgba(52, 211, 153, 0.4);
+  background: linear-gradient(180deg, #d1fae5 0%, #a7f3d0 100%);
+  color: #065f46;
+  border: 1px solid #6ee7b7;
 }
 
 .skeuo-badge-expense {
-  background: linear-gradient(180deg, #be123c 0%, #881337 100%);
-  color: #fecdd3;
-  border-color: rgba(244, 63, 94, 0.4);
+  background: linear-gradient(180deg, #ffe4e6 0%, #fecdd3 100%);
+  color: #9f1239;
+  border: 1px solid #fda4af;
 }
 
 .skeuo-badge-transfer {
-  background: linear-gradient(180deg, #0369a1 0%, #0c4a6e 100%);
-  color: #bae6fd;
-  border-color: rgba(56, 189, 248, 0.4);
+  background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);
+  color: #0369a1;
+  border: 1px solid #7dd3fc;
 }
 
 /* ==========================================================================
@@ -645,56 +639,43 @@ body {
    ========================================================================== */
 
 .skeuo-modal-box {
-  background: linear-gradient(155deg, #18284c 0%, #0f1a34 100%);
-  border-top: 1px solid rgba(255, 255, 255, 0.25);
-  border-left: 1px solid rgba(255, 255, 255, 0.12);
-  border-right: 1px solid rgba(0, 0, 0, 0.7);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.85);
+  background: linear-gradient(165deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(203, 213, 225, 0.8);
+  border-top: 1px solid #ffffff;
   box-shadow: 
-    0 25px 60px -12px rgba(0, 0, 0, 0.95), 
-    0 0 0 1px rgba(255, 255, 255, 0.08), 
-    inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    0 25px 50px -12px rgba(15, 23, 42, 0.25), 
+    0 0 0 1px rgba(255, 255, 255, 0.8), 
+    inset 0 1px 0 #ffffff;
   border-radius: 20px;
 }
 
 /* ==========================================================================
-   ENGRAVED / CHISELED TEXT
+   TEXT STYLES & ACCENTS
    ========================================================================== */
 
 .engraved-heading {
-  color: #94a3b8;
-  text-shadow: 
-    0 1px 1px rgba(255, 255, 255, 0.15), 
-    0 -1px 1px rgba(0, 0, 0, 0.9);
+  color: var(--text-muted);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
 }
 
 .metallic-text {
-  background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+  background: linear-gradient(180deg, #0f172a 0%, #334155 60%, #475569 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.7));
 }
 
 .golden-text {
-  background: linear-gradient(180deg, #fef08a 0%, #f59e0b 60%, #b45309 100%);
+  background: linear-gradient(180deg, #b45309 0%, #d97706 60%, #f59e0b 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
 }
 
 .emerald-text {
-  background: linear-gradient(180deg, #a7f3d0 0%, #10b981 60%, #047857 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+  color: #059669;
 }
 
 .rose-text {
-  background: linear-gradient(180deg, #fecdd3 0%, #f43f5e 60%, #9f1239 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+  color: #e11d48;
 }
